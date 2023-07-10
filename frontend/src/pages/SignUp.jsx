@@ -1,36 +1,54 @@
 import image from '../components/forLogin.png';
+import React, { useContext, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+//import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../utilits/AuthContext';
 
-const getToken = async (user) => {
+/* const getToken = async (user) => {
     try {
       const response = await axios.post('/api/v1/login', user );
+      console.log(response.status)
       return response.data.token;
-    } catch (error) {
+     } catch (error) {
+        if (error.response.status) {
+            return false;
+        }
       console.error('Ошибка при получении токена:', error);
-      return false;
+      return null;
     }
-}
+} */
+        //console.log('oshibka ', errorAuth)
+/*         const token = await getToken(values);
+        if (token) {
+            localStorage.setItem('token', token);
+            return navigate('/')
+        } else {
+            errorMessage = 'Неверные учетные данные';
+            console.log(errorMessage)
+        } */
 
 export const SignUp = () => {
-    let errorMessage = null;
+    const { token, errorAuth, login } = useContext(AuthContext);
+    
+    const navigate = useNavigate();
     const validationSchema = Yup.object({
         username: Yup.string().required('Поле "Ваш ник" обязательно для заполнения'),
         password: Yup.string().required('Поле "Пароль" обязательно для заполнения')
       });
     
+
+ 
     const handleSubmit = async (values) => {
-        const token = await getToken(values);
-        if (token) {
-            localStorage.setItem('token', token);
-            return <Navigate to="/" />;
-        } else {
-            errorMessage = 'Неверные учетные данные';
-            console.log(errorMessage)
-        }
+        await login(values)
     };
+    useEffect(() => {
+        if (token) {
+            console.log(token)
+            navigate('/');
+        }
+      }, [token]);
     
     return (        
             <div className="vh-100 w-100">
@@ -75,11 +93,11 @@ export const SignUp = () => {
                                                         id="password"
                                                         name="password"
                                                         placeholder="Пароль"
-                                                        className={`form-control ${errors.password && touched.password || errorMessage ? 'is-invalid' : null}`}
+                                                        className={`form-control ${errors.password && touched.password || errorAuth ? 'is-invalid' : null}`}
                                                         />
                                                         <label className="form-label" htmlFor="password">Пароль</label>
                                                         {errors.password && touched.password ? <div className="invalid-tooltip">{errors.password}</div> : null}
-                                                        {errorMessage ? <div className="invalid-tooltip">{errorMessage} </div> : null } 
+                                                        {errorAuth ? <div className="invalid-tooltip">{'Неверные учетные данные'} </div> : null } 
                                                     </div>
                                                     <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
                                                         Войти
