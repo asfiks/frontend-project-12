@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import { SignUp } from './pages/SignUp';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { Test } from './pages/Test';
+import { SignUp } from '../pages/SignUp';
+import { NotFoundPage } from '../pages/NotFoundPage';
+import { Test } from '../pages/Test';
 
 
 
