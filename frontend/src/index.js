@@ -8,9 +8,9 @@ import store from './slices/index.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <AuthProvider>
-        <Provider store={store}>
+    <Provider store={store}>
+        <AuthProvider>
             <App />
-        </Provider>
-    </AuthProvider>
+        </AuthProvider>
+    </Provider>
     );

@@ -1,20 +1,31 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSlice } from '@reduxjs/toolkit';
+import { AuthContext } from '../utilits/AuthContext';
 
 
 
 // Начальное значение
 const initialState = {
-  chanels: [],
+  value: [],
 };
 
-const channelsReducer = createSlice({
+const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   // Редьюсеры в слайсах мутируют состояние и ничего не возвращают наружу
   reducers: {
-/*     increment: (state) => {
+    getChannels: (state) => {
+      state.value.push('aaaa ')
+    }
+  },
+});
+    /* async () => {
+      const data = await axios.get('/api/v1/data', {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    },
+     increment: (state) => {
       state.value += 1;
     },
     decrement: (state) => {
@@ -23,13 +34,10 @@ const channelsReducer = createSlice({
     // пример с данными
     incrementByAmount: (state, action) => {
       state.value += action.payload;
-    }, */
-  },
-});
-
+    }, */ 
 // Слайс генерирует действия, которые экспортируются отдельно
 // Действия генерируются автоматически из имен ключей редьюсеров
-//export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { getChannels } = channelsSlice.actions;
 
 // По умолчанию экспортируется редьюсер, сгенерированный слайсом
-export default channelsReducer.reducer;
+export default channelsSlice.reducer;
