@@ -19,7 +19,6 @@ export const SignUp = () => {
     };
     useEffect(() => {
         if (token) {
-            console.log(token)
             navigate('/');
         }
       }, [token,navigate]);
