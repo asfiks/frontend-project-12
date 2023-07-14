@@ -1,9 +1,9 @@
 import image from '../components/forLogin.png';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../utilits/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 export const SignUp = () => {
     const { token, errorAuth, login } = useContext(AuthContext);

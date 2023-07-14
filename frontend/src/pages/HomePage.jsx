@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getChannels, } from '../slices/channelsSlice.js';
+import { AuthContext } from '../contexts/AuthContext';
+
+
 
 export const HomePage = () => {
-    const channels = useSelector((state) => state.channels.value)
-    const dispatch = useDispatch();
-    return (
+  const { token } = useContext(AuthContext);
+  console.log('work it')
+  console.log(token)
+  const channels = useSelector((state) => state.channels.value)
+  const dispatch = useDispatch();
+  return (
     
     <div className="d-flex justify-content-center align-items-center vh-100">
         <h1 /* className="d-flex justify-content-center align-items-center vh-100" */>test</h1>

@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthContext } from '../utilits/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 
 
