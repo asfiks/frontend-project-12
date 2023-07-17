@@ -7,9 +7,9 @@ import { AuthContext } from '../contexts/AuthContext';
 
 export const HomePage = () => {
   const { token } = useContext(AuthContext);
-  console.log('work it')
   console.log(token)
   const channels = useSelector((state) => state.channels.value)
+  console.log(channels)
   const dispatch = useDispatch();
   return (
     

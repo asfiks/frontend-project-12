@@ -1,13 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import { AuthContext } from '../contexts/AuthContext';
 import { SignUp } from '../pages/SignUp';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { HomePage } from '../pages/HomePage';
 
-
-
 const App = () => {
-  const token = localStorage.getItem('token')
+  const { token } = useContext(AuthContext);
+  useEffect(() => {    
+    if (token) {
+      console.log(token)
+      return <Navigate to="/" />
+    }
+  }, [token]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -17,5 +24,6 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
-}
+};
+
 export default App;
