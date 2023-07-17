@@ -10,16 +10,15 @@ const App = () => {
   const { token } = useContext(AuthContext);
   useEffect(() => {    
     if (token) {
-      console.log(token)
       return <Navigate to="/" />
     }
-  }, [token]);
+  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={token ? <HomePage /> : <SignUp />} />
-        <Route path="login" element={token ? <HomePage /> : <SignUp />} />
+        <Route path="/login" element={token ? <HomePage /> : <SignUp />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

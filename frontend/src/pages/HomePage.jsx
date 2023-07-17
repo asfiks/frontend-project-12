@@ -1,16 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getChannels, } from '../slices/channelsSlice.js';
+import { addChannels } from '../slices/channelsSlice.js';
 import { AuthContext } from '../contexts/AuthContext';
+import  fetchData  from '../slices/fetchThunk.js';
 
 
 
 export const HomePage = () => {
   const { token } = useContext(AuthContext);
-  console.log(token)
-  const channels = useSelector((state) => state.channels.value)
-  console.log(channels)
   const dispatch = useDispatch();
+  const channels = useSelector((state) => state.channels.value)
+  useEffect(() => {
+    dispatch(fetchData(token)).then((data) => {
+      dispatch(addChannels(data.payload));
+      
+    });
+  }, [dispatch, token]);  
   return (
     
     <div className="d-flex justify-content-center align-items-center vh-100">
@@ -18,11 +23,11 @@ export const HomePage = () => {
       <div>
         <button
           aria-label="Increment value"
-          onClick={() => dispatch(getChannels())}
+          onClick={() => console.log(channels.payload)}
         >
           Прибавить
         </button>
-        <span>{channels}</span>
+        <span></span>
         </div>
     </div>
   )

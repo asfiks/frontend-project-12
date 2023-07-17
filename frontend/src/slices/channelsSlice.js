@@ -7,7 +7,7 @@ import { AuthContext } from '../contexts/AuthContext';
 
 // Начальное значение
 const initialState = {
-  value: [],
+  value: {},
 };
 
 const channelsSlice = createSlice({
@@ -15,29 +15,13 @@ const channelsSlice = createSlice({
   initialState,
   // Редьюсеры в слайсах мутируют состояние и ничего не возвращают наружу
   reducers: {
-    getChannels: (state) => {
-      state.value.push('aaaa ')
+    addChannels: (state, data) => {
+      state.value = {...data}
     }
   },
 });
-    /* async () => {
-      const data = await axios.get('/api/v1/data', {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    },
-     increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    // пример с данными
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    }, */ 
-// Слайс генерирует действия, которые экспортируются отдельно
-// Действия генерируются автоматически из имен ключей редьюсеров
-export const { getChannels } = channelsSlice.actions;
+
+export const { addChannels } = channelsSlice.actions;
 
 // По умолчанию экспортируется редьюсер, сгенерированный слайсом
 export default channelsSlice.reducer;

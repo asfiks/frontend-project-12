@@ -17,11 +17,11 @@ export const SignUp = () => {
     const handleSubmit = async (values) => {
         await login(values)
     };
-    useEffect(() => {
+/*     useEffect(() => {
         if (token) {
             navigate('/');
         }
-      }, [token,navigate]);
+      }, [token,navigate]); */
     
     return (        
             <div className="vh-100 w-100">
