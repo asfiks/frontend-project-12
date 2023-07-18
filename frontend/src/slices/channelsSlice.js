@@ -1,27 +1,47 @@
-import { useEffect, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createSlice } from '@reduxjs/toolkit';
-import { AuthContext } from '../contexts/AuthContext';
+import axios from 'axios';
+import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../routes/api'
 
+export const fetchData = createAsyncThunk(
+  'fetchData',
+  async (token) => {
+    const response = await axios.get(api.dataPath(), 
+      { headers: { Authorization: `Bearer ${token}` }});
+    return response.data;
+  },
+);
 
+const channelsAdapter = createEntityAdapter();
 
-// Начальное значение
-const initialState = {
-  value: {},
-};
+const initialState = channelsAdapter.getInitialState({ loadingStatus: 'idle', error: null });
 
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
-  // Редьюсеры в слайсах мутируют состояние и ничего не возвращают наружу
   reducers: {
-    addChannels: (state, data) => {
-      state.value = {...data}
-    }
+    addChannel: channelsAdapter.addOne,
+    addChannels: channelsAdapter.addMany,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchData.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchData.fulfilled, (state, action) => {
+        const { channels, currentChannelId } = action.payload;
+        channelsAdapter.setAll(state, channels);
+        state.currentChannelId = currentChannelId;
+        state.loadingStatus = 'idle';
+        state.error = null;
+      })
+      .addCase(fetchData.rejected, (state, action) => {
+        state.loadingStatus = 'failed';
+        state.error = action.error;
+      });
   },
 });
 
-export const { addChannels } = channelsSlice.actions;
-
-// По умолчанию экспортируется редьюсер, сгенерированный слайсом
+export const { addChannel, addChannels } = channelsSlice.actions;
+export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export default channelsSlice.reducer;

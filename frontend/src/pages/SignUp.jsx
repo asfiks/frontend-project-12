@@ -1,14 +1,12 @@
 import image from '../components/forLogin.png';
-import { useContext, useEffect } from 'react';
+import { useContext, } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 export const SignUp = () => {
-    const { token, errorAuth, login } = useContext(AuthContext);
-    
-    const navigate = useNavigate();
+    const { errorAuth, login } = useContext(AuthContext);
+
     const validationSchema = Yup.object({
         username: Yup.string().required('Поле "Ваш ник" обязательно для заполнения'),
         password: Yup.string().required('Поле "Пароль" обязательно для заполнения')
@@ -17,12 +15,6 @@ export const SignUp = () => {
     const handleSubmit = async (values) => {
         await login(values)
     };
-/*     useEffect(() => {
-        if (token) {
-            navigate('/');
-        }
-      }, [token,navigate]); */
-    
     return (        
             <div className="vh-100 w-100">
                 <div className="vh-100" id="chat">
