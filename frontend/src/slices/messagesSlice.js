@@ -11,16 +11,16 @@ export const fetchData = createAsyncThunk(
   },
 );
 
-const channelsAdapter = createEntityAdapter();
+const messagesAdapter = createEntityAdapter();
 
-const initialState = channelsAdapter.getInitialState({ loadingStatus: 'idle', error: null });
+const initialState = messagesAdapter.getInitialState({ loadingStatus: 'idle', error: null });
 
-const channelsSlice = createSlice({
-  name: 'channels',
+const messagesSlice = createSlice({
+  name: 'messages',
   initialState,
   reducers: {
-    addChannel: channelsAdapter.addOne,
-    addChannels: channelsAdapter.addMany,
+    addMessage: messagesAdapter.addOne,
+    addMessages: messagesAdapter.addMany,
   },
   extraReducers: (builder) => {
     builder
@@ -29,9 +29,8 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        const { channels, currentChannelId } = action.payload;
-        channelsAdapter.setAll(state, channels);
-        state.currentChannelId = currentChannelId;
+        const { messages } = action.payload;
+        messagesAdapter.setAll(state, messages);
         state.loadingStatus = 'idle';
         state.error = null;
       })
@@ -42,6 +41,6 @@ const channelsSlice = createSlice({
   },
 });
 
-export const { addChannel, addChannels } = channelsSlice.actions;
-export const selectorsChannels = channelsAdapter.getSelectors((state) => state.channels);
-export default channelsSlice.reducer;
+export const { addMessage, addMessages } = messagesSlice.actions;
+export const selectorsMessages = messagesAdapter.getSelectors((state) => state.messages);
+export default messagesSlice.reducer;
