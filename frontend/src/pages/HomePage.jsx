@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
+import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectors } from '../slices/channelsSlice';
+
 
 
 
@@ -14,7 +16,12 @@ export const HomePage = () => {
   }, [dispatch, token]);
   
   const channels = useSelector(selectors.selectAll);
-  
+  const { currentChannelId } = useSelector((state) => state.channels);
+
+/*   const classForButtonChannel = cn('w-100', 'rounded-0', 'text-start', 'btn', {
+    'btn-secondary': channel.id === currentChannelId,
+  }); */
+    //<button type="button" class="w-100 rounded-0 text-start btn btn-secondary"><span class="me-1">#</span>general</button>
   return (
     <div className="h-100 vh-100">
       <div className="h-100" id="chat">
@@ -41,7 +48,9 @@ export const HomePage = () => {
                 <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                   {channels.map((channel) => (
                     <li className="nav-item w-100" key={channel.id}>
-                    <button type="button" className="w-100 rounded-0 text-start btn">
+                    <button type="button" className={cn('w-100', 'rounded-0', 'text-start', 'btn', {
+    'btn-secondary': channel.id === currentChannelId,
+  })}>
                       <span className="me-1">#</span>{channel.name}
                     </button>
                   </li>
