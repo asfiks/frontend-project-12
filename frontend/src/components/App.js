@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { socket } from '../socket.js'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import { AuthContext } from '../contexts/AuthContext';
@@ -13,6 +14,7 @@ const App = () => {
       return <Navigate to="/" />
     }
   }, []);
+
 
   return (
     <BrowserRouter>
