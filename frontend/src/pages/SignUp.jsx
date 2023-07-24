@@ -1,8 +1,8 @@
 import image from '../components/forLogin.png';
 import { useContext, } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { AuthContext } from '../contexts/AuthContext';
 
 export const SignUp = () => {
     const { errorAuth, login } = useContext(AuthContext);

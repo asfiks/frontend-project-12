@@ -1,39 +1,46 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef  } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectorsMessages, addMessage } from '../slices/messagesSlice';
 import { selectorsChannels } from '../slices/channelsSlice';
-import { getNewMessages } from '../socket.js'
+import { getNewMessages } from '../socket.js';
+import { ApiContext } from '../contexts/ApiContext';
 
 const MessagesBlock = () => {
+
     const { token } = useContext(AuthContext);
     const username = localStorage.getItem('username')
     const dispatch = useDispatch();
+    const inputRef = useRef();
 
-    useEffect(() => {
-        dispatch(fetchData(token));
-    }, [dispatch, token]);
-    
+    const { getNewMessage } = useContext(ApiContext);
+
     const messages = useSelector(selectorsMessages.selectAll);
     const { currentChannelId } = useSelector((state) => state.channels);
+    const actualMessages = messages.filter((m) => m.channelId === currentChannelId)
     const channels = useSelector(selectorsChannels.selectAll);
-
 
     const nameCurrentChannel = (channels) => {
         const curentChannel = channels.find((channel) => currentChannelId === channel.id);
         return curentChannel ? curentChannel.name : null;
     };
 
-    const handleSubmit = (message) => {
+    useEffect(() => {
+      inputRef.current.focus();
+    }, []);
+
+    const handleSubmit = (message, { resetForm }) => {
       const dataForServer = {
         'channelId': currentChannelId,
         'username': username,
         'message': message.body,
       }
-      getNewMessages(dataForServer);
+      getNewMessage(dataForServer);
+      resetForm();
+      inputRef.current.focus();
     }
-
+    
     return (
         <div className="col p-0 h-100">
         <div className="d-flex flex-column h-100">
@@ -41,7 +48,13 @@ const MessagesBlock = () => {
             <p className="m-0"><b># {nameCurrentChannel(channels)}</b></p>
             <span className="text-muted">0 сообщений</span>
           </div>
-          <div id="messages-box" className="chat-messages overflow-auto px-5 "></div>
+          <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+            {actualMessages.map((m) => (
+              <div className="text-break mb-2" key={m.id}>
+                <b>{m.username}</b>{`: ${m.message}`}
+              </div>
+            ))}
+          </div>
           <div className="mt-auto px-5 py-3">
             <Formik initialValues={{ body: '' }} onSubmit={handleSubmit}>
               <Form noValidate className="py-1 border rounded-2">
@@ -49,7 +62,8 @@ const MessagesBlock = () => {
                   <Field name="body"
                     aria-label="Новое сообщение"
                     placeholder="Введите сообщение..."
-                    className="border-0 p-0 ps-2 form-control"  
+                    className="border-0 p-0 ps-2 form-control"
+                    innerRef={inputRef}  
                   />
                   <button type="submit" className="btn btn-group-vertical">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
