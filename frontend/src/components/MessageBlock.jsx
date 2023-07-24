@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectorsMessages, addMessage } from '../slices/messagesSlice';
 import { selectorsChannels } from '../slices/channelsSlice';
+import { getNewMessages } from '../socket.js'
 
 const MessagesBlock = () => {
     const { token } = useContext(AuthContext);
-  
+    const username = localStorage.getItem('username')
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -18,13 +19,19 @@ const MessagesBlock = () => {
     const { currentChannelId } = useSelector((state) => state.channels);
     const channels = useSelector(selectorsChannels.selectAll);
 
+
     const nameCurrentChannel = (channels) => {
         const curentChannel = channels.find((channel) => currentChannelId === channel.id);
         return curentChannel ? curentChannel.name : null;
     };
 
-    const handleSubmit = (messages) => {
-      console.log(messages)
+    const handleSubmit = (message) => {
+      const dataForServer = {
+        'channelId': currentChannelId,
+        'username': username,
+        'message': message.body,
+      }
+      getNewMessages(dataForServer);
     }
 
     return (

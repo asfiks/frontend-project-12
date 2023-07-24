@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       setToken(newToken);
       localStorage.setItem('token', newToken);
       
-      localStorage.setItem('userName', user.username);
+      localStorage.setItem('username', user.username);
     } catch (error) {
       if (error.response.status === 401) {
         setErrorAuth('401');
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('userName');
+    localStorage.removeItem('username');
     setToken('');
   };
 
