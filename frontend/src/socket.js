@@ -1,8 +1,8 @@
 import { io } from 'socket.io-client';
 
-export const socket = io(); 
+export const socket = io();
 
-export const getNewMessages = (newMessage) => {
+/* export const getNewMessages = (newMessage) => {
     socket.emit('newMessage', newMessage, () => {
         try {
             socket.on('newMessage', (response) => {
@@ -12,4 +12,5 @@ export const getNewMessages = (newMessage) => {
             console.error(e);
         };
     });
-};
+}; */
+
