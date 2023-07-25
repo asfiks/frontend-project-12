@@ -1,14 +1,16 @@
 import React from 'react';
-/* import { useContext, useEffect }  from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useContext, }  from 'react';
+/* import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectors } from '../slices/channelsSlice'; */
 import MessagesBlock from '../components/MessageBlock';
 import NavBlock from '../components/NavBlock';
 import ChannelsBlock from '../components/ChannelsBlock';
+import ModalAddChannel from '../components/ModalAddChannel';
+import { ModalContext } from '../contexts/ModalContext';
 
 export const HomePage = () => {
-
+  const { isOpenModal } = useContext(ModalContext);
   return (
     <div className="h-100 vh-100">
       <div className="h-100" id="chat">
@@ -21,8 +23,9 @@ export const HomePage = () => {
             </div>
           </div>
         </div>
+        <div className="Toastify"></div>
       </div>
-      <div className="Toastify"></div>
+      {isOpenModal && <ModalAddChannel />}
     </div>
   );
 };
