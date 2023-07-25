@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
-import { fetchData, selectorsChannels } from '../slices/channelsSlice';
+import { fetchData, selectorsChannels, setCurrentChannelId } from '../slices/channelsSlice';
 
 const ChannelsBlock = () => {
     const { token } = useContext(AuthContext);
@@ -15,12 +15,18 @@ const ChannelsBlock = () => {
     
     const channels = useSelector(selectorsChannels.selectAll);
     const { currentChannelId } = useSelector((state) => state.channels);
+    const state = useSelector((state) => state)
 
     const getClassNameForChanellsButton = (id) => {
         return cn('w-100', 'rounded-0', 'text-start', 'btn', {
-            'btn-secondary': id === currentChannelId,
+            'btn-secondary': id === state.channels.currentChannelId ? true : false,
             });
     };
+
+    const handleClick = (channel) => {
+        const changeChannelId = channel.id;
+        dispatch(setCurrentChannelId(changeChannelId));
+    }
 
     return (
         
@@ -38,7 +44,7 @@ const ChannelsBlock = () => {
             <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                 {channels.map((channel) => (
                     <li className="nav-item w-100" key={channel.id}>
-                        <button type="button" className={getClassNameForChanellsButton(channel.id)}>
+                        <button type="button" onClick={() => handleClick(channel)} className={getClassNameForChanellsButton(channel.id)}>
                             <span className="me-1">#</span>{channel.name}
                         </button>
                     </li>
