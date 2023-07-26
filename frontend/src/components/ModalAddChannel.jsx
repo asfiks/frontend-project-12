@@ -1,9 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import cn from 'classnames';
 import { ModalContext } from '../contexts/ModalContext';
-/* import { useSelector, useDispatch } from 'react-redux';
-import { AuthContext } from '../contexts/AuthContext';
-import { fetchData, selectorsChannels, setCurrentChannelId } from '../slices/channelsSlice'; */
 
 const ModalAddChannel = () => {
     const { isOpenModal, openModal, closeModal } = useContext(ModalContext)

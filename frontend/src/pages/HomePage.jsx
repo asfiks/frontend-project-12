@@ -25,7 +25,7 @@ export const HomePage = () => {
         </div>
         <div className="Toastify"></div>
       </div>
-      {isOpenModal && <ModalAddChannel />}
+      {/* {isOpenModal && <ModalAddChannel />} */}
     </div>
   );
 };
