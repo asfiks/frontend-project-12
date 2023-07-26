@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+/* import React, { useContext, useEffect } from 'react';
 import cn from 'classnames';
 import { ModalContext } from '../contexts/ModalContext';
 
@@ -33,4 +33,4 @@ const ModalAddChannel = () => {
     );
   };
   
-  export default ModalAddChannel;
+  export default ModalAddChannel; */

@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectorsMessages, addMessage } from '../slices/messagesSlice';
 import { selectorsChannels } from '../slices/channelsSlice';
-import { getNewMessages } from '../socket.js';
 import { ApiContext } from '../contexts/ApiContext';
 
 const MessagesBlock = () => {
