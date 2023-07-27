@@ -24,7 +24,7 @@ export const ApiProvider = ({ children }) => {
 
 };
 
-const getNewChannel = (newChannel) => {
+const getAddNewChannelFromServer = (newChannel) => {
   socket.emit('newChannel', newChannel, (response) => {
     if (response.status !== 'ok') {
       throw new Error('channel adding failed');
@@ -39,7 +39,7 @@ const getNewChannel = (newChannel) => {
 };
 
   return (
-    <ApiContext.Provider value={{ getNewMessage, getNewChannel }}>
+    <ApiContext.Provider value={{ getNewMessage, getAddNewChannelFromServer }}>
       {children}
     </ApiContext.Provider>
   );
