@@ -35,24 +35,24 @@ const AddChannelModal = ({ show, handleClose, newChannel, setNewChannel, getAddN
           <Modal.Title>Добавить канал</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Formik
-            initialValues={{ name: '', }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-        >
-            {({ errors, touched }) => (
-                <Form>
-                    <Field
-                        type="text"
-                        id="name"
-                        name="name"
-                        autoFocus
-                        className={`form-control ${errors.name && touched.name ? 'is-invalid' : null}`}
-                    />
-                    {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
-                </Form>
-            )}
-        </Formik>
+            <Formik
+                initialValues={{ name: '', }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ errors, touched }) => (
+                    <Form>
+                        <Field
+                            type="text"
+                            id="name"
+                            name="name"
+                            autoFocus
+                            className={`form-control ${errors.name && touched.name ? 'is-invalid' : null}`}
+                        />
+                        {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
+                    </Form>
+                )}
+            </Formik>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
