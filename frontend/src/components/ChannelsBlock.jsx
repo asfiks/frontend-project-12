@@ -9,7 +9,8 @@ import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 
 
-const AddChannelModal = ({ show, handleClose, newChannel, setNewChannel, getAddNewChannelFromServer, }) => {
+const AddChannelModal = ({ show, handleClose, newChannel, setNewChannel, }) => {
+    const { getAddNewChannelFromServer } = useContext(ApiContext);
     const dispatch = useDispatch();
     const channels = useSelector(selectorsChannels.selectAll);
     const namesAllChannels = channels.map((channel) => channel.name)
@@ -18,53 +19,56 @@ const AddChannelModal = ({ show, handleClose, newChannel, setNewChannel, getAddN
       });
 
     
-    const handleSubmit = () => {
-        console.log('tadam')
-
+      const handleSubmit = (values) => {
+       
+        console.log(values);
+        handleClose()
+      
         
-         
-    }
+      }
+
     return (
-      <Modal 
-        onHide={handleClose}
-        show={show}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+        <Modal
+          onHide={handleClose}
+          show={show}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Добавить канал</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Formik
-                initialValues={{ name: '', }}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
+              initialValues={{ name: '' }}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
             >
-                {({ errors, touched }) => (
-                    <Form>
-                        <Field
-                            type="text"
-                            id="name"
-                            name="name"
-                            autoFocus
-                            className={`form-control ${errors.name && touched.name ? 'is-invalid' : null}`}
-                        />
-                        {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
-                    </Form>
-                )}
+              {({ errors, touched, }) => (
+                <Form>
+                  <Field
+                    type="text"
+                    id="name"
+                    name="name"
+                    autoFocus
+                    className={`form-control ${errors.name && touched.name ? 'is-invalid' : null}`}
+                  />
+                  {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Отменить
+                    </Button>
+                    <Button variant="primary" type="submit">
+                      Создать канал
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              )}
             </Formik>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Отменить
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Создать канал
-          </Button>
-        </Modal.Footer>
-      </Modal>
-  );
-}
+          </Modal.Body>
+        </Modal>
+      );
+    };
+
 
 const ChannelsBlock = () => {
     const { token } = useContext(AuthContext);
@@ -125,8 +129,6 @@ const ChannelsBlock = () => {
             handleClose={handleClose}
             newChannel={newChannel}
             setNewChannel={setNewChannel}
-            getAddNewChannelFromServer={getAddNewChannelFromServer}
-            
             />
         </>            
     );
