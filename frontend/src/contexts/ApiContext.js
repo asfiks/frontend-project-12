@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { socket } from '../socket.js';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '../slices/messagesSlice';
-import { addChannel } from '../slices/channelsSlice';
+import { addChannel, setCurrentChannelId } from '../slices/channelsSlice';
 
 
 export const ApiContext = createContext();
@@ -33,7 +33,7 @@ const getAddNewChannelFromServer = (newChannel) => {
 
   socket.on('newChannel', (response) => {
     dispatch(addChannel(response))
-    console.log(response)
+    dispatch(setCurrentChannelId(response.id))
   });
 
 };

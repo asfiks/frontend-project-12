@@ -4,71 +4,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { ApiContext } from '../contexts/ApiContext';
 import { fetchData, selectorsChannels, setCurrentChannelId } from '../slices/channelsSlice';
-import {Button, Modal, } from 'react-bootstrap';
+import {Button, Modal, Dropdown} from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
+import { AddChannelModal } from './modals/AddChannel'
 
+const TestComponent = ({channel}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const AddChannelModal = ({ show, handleClose, newChannel, setNewChannel, }) => {
-    const { getAddNewChannelFromServer } = useContext(ApiContext);
-    const dispatch = useDispatch();
-    const channels = useSelector(selectorsChannels.selectAll);
-    const namesAllChannels = channels.map((channel) => channel.name)
-    const validationSchema = Yup.object({
-        name: Yup.string().required('Поле "Введите имя" обязательно для заполнения').notOneOf(namesAllChannels, 'Канал с таким названием уже существуют')
-      });
+  const handleDropdownToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
-    
-      const handleSubmit = (values) => {
-       
-        console.log(values);
-        handleClose()
-      
-        
-      }
-
-    return (
-        <Modal
-          onHide={handleClose}
-          show={show}
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Добавить канал</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Formik
-              initialValues={{ name: '' }}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ errors, touched, }) => (
-                <Form>
-                  <Field
-                    type="text"
-                    id="name"
-                    name="name"
-                    autoFocus
-                    className={`form-control ${errors.name && touched.name ? 'is-invalid' : null}`}
-                  />
-                  {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Отменить
-                    </Button>
-                    <Button variant="primary" type="submit">
-                      Создать канал
-                    </Button>
-                  </Modal.Footer>
-                </Form>
-              )}
-            </Formik>
-          </Modal.Body>
-        </Modal>
-      );
-    };
-
+  return (
+    <Dropdown as="div" className="d-flex dropdown btn-group">
+      <Button className="w-100 rounded-0 text-start text-truncate btn">
+        <span className="me-1">#</span>
+          {channel.name}
+      </Button>
+      <Button
+        id="react-aria6070517085-1"
+        aria-expanded={isOpen}
+        className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
+        onClick={handleDropdownToggle}
+      >
+        <span className="visually-hidden">Управление каналом</span>
+      </Button>
+      <Dropdown.Menu show={isOpen}>
+        <Dropdown.Item href="#">Удалить</Dropdown.Item>
+        <Dropdown.Item href="#">Переименовать</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
 
 const ChannelsBlock = () => {
     const { token } = useContext(AuthContext);
@@ -88,11 +56,10 @@ const ChannelsBlock = () => {
     
     const channels = useSelector(selectorsChannels.selectAll);
     const { currentChannelId } = useSelector((state) => state.channels);
-    const state = useSelector((state) => state)
-
+    
     const getClassNameForChanellsButton = (id) => {
         return cn('w-100', 'rounded-0', 'text-start', 'btn', {
-            'btn-secondary': id === state.channels.currentChannelId ? true : false,
+            'btn-secondary': id === currentChannelId ? true : false,
             });
     };
 
@@ -115,19 +82,27 @@ const ChannelsBlock = () => {
                     </button>
                 </div>
                 <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-                    {channels.map((channel) => (
-                        <li className="nav-item w-100" key={channel.id}>
-                            <button type="button" onClick={() => handleClick(channel)} className={getClassNameForChanellsButton(channel.id)}>
-                                <span className="me-1">#</span>{channel.name}
-                            </button>
-                        </li>
-                    ))}
+                  {channels.map((channel) => (
+                    <li className="nav-item w-100" key={channel.id}>
+                      {!channel.removable ? (
+                        <button
+                          type="button"
+                          onClick={() => handleClick(channel)}
+                          className={getClassNameForChanellsButton(channel.id)}
+                        >
+                          <span className="me-1">#</span>
+                          {channel.name}
+                        </button>
+                      ) : (
+                        <TestComponent channel={channel} />
+                      )}
+                    </li>
+                  ))}
                 </ul>
             </div>
             <AddChannelModal
             show={show}
             handleClose={handleClose}
-            newChannel={newChannel}
             setNewChannel={setNewChannel}
             />
         </>            
