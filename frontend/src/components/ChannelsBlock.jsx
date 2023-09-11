@@ -9,7 +9,7 @@ import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 import { AddChannelModal } from './modals/AddChannel'
 
-const TestComponent = ({channel}) => {
+const TestComponent = ({channel, getClassNameForChanellsButton}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDropdownToggle = () => {
@@ -17,15 +17,16 @@ const TestComponent = ({channel}) => {
   };
 
   return (
-    <Dropdown as="div" className="d-flex dropdown btn-group">
-      <Button className="w-100 rounded-0 text-start text-truncate btn">
+    <Dropdown as="div" role="group" className="d-flex btn-group">
+      <button className={getClassNameForChanellsButton(channel.id)}>
         <span className="me-1">#</span>
           {channel.name}
-      </Button>
+      </button>
       <Button
+        style={{ backgroundColor: 'transparent', color: 'black' }}
         id="react-aria6070517085-1"
         aria-expanded={isOpen}
-        className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
+        className="flex-grow-0 dropdown-toggle dropdown-toggle-split"
         onClick={handleDropdownToggle}
       >
         <span className="visually-hidden">Управление каналом</span>
@@ -94,7 +95,9 @@ const ChannelsBlock = () => {
                           {channel.name}
                         </button>
                       ) : (
-                        <TestComponent channel={channel} />
+                        <TestComponent channel={channel}
+                        getClassNameForChanellsButton={getClassNameForChanellsButton}
+                        />
                       )}
                     </li>
                   ))}
