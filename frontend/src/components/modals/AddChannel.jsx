@@ -19,14 +19,12 @@ export const AddChannelModal = ({ show, handleClose, setNewChannel, }) => {
   const validationSchema = Yup.object({
       name: Yup.string().required('Поле "Введите имя" обязательно для заполнения').notOneOf(namesAllChannels, 'Канал с таким названием уже существуют')
     });
-    useEffect(() => {
+/*     useEffect(() => {
       console.log(state)
-    }, state)
+    }, state) */
   const handleSubmit = async (values) => {
       const newChannel = await getAddNewChannelFromServer(values);
       handleClose();
-
-      
     }
 
   return (

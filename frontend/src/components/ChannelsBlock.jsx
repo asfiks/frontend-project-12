@@ -4,40 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
 import { ApiContext } from '../contexts/ApiContext';
 import { fetchData, selectorsChannels, setCurrentChannelId } from '../slices/channelsSlice';
-import {Button, Modal, Dropdown} from 'react-bootstrap';
+import {Button, Modal, Dropdown, ButtonGroup } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 import { AddChannelModal } from './modals/AddChannel'
-
-const TestComponent = ({channel, getClassNameForChanellsButton}) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleDropdownToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <Dropdown as="div" role="group" className="d-flex btn-group">
-      <button className={getClassNameForChanellsButton(channel.id)}>
-        <span className="me-1">#</span>
-          {channel.name}
-      </button>
-      <Button
-        style={{ backgroundColor: 'transparent', color: 'black' }}
-        id="react-aria6070517085-1"
-        aria-expanded={isOpen}
-        className="flex-grow-0 dropdown-toggle dropdown-toggle-split"
-        onClick={handleDropdownToggle}
-      >
-        <span className="visually-hidden">Управление каналом</span>
-      </Button>
-      <Dropdown.Menu show={isOpen}>
-        <Dropdown.Item href="#">Удалить</Dropdown.Item>
-        <Dropdown.Item href="#">Переименовать</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-  );
-};
 
 const ChannelsBlock = () => {
     const { token } = useContext(AuthContext);
@@ -51,6 +21,7 @@ const ChannelsBlock = () => {
     const handleShow = () => setShow(true);
     const { getAddNewChannelFromServer } = useContext(ApiContext);
     const [newChannel, setNewChannel] = useState('');
+    
     useEffect(() => {
         dispatch(fetchData(token));
     }, [dispatch, token]);
@@ -68,6 +39,8 @@ const ChannelsBlock = () => {
         const changeChannelId = channel.id;
         dispatch(setCurrentChannelId(changeChannelId));
     }
+
+    //const NewChannelButton = (channel, getClassNameForChanellsButton) => 
 
     return (
         <>
@@ -95,9 +68,17 @@ const ChannelsBlock = () => {
                           {channel.name}
                         </button>
                       ) : (
-                        <TestComponent channel={channel}
-                        getClassNameForChanellsButton={getClassNameForChanellsButton}
-                        />
+                        <Dropdown as={ButtonGroup} className="d-flex">
+                          <Button variant="success"><span className="me-1">#</span>{channel.name}</Button>
+                          
+                          <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+                          <Dropdown.Menu>
+                              <Dropdown.Item href="">Action</Dropdown.Item>
+                              <Dropdown.Item href="">Another action</Dropdown.Item>
+                              <Dropdown.Item href="">Something else</Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
                       )}
                     </li>
                   ))}
