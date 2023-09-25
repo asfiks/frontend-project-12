@@ -8,7 +8,6 @@ import { Formik, Form, Field } from 'formik';
 
 
 export const RenameChannelModal = ({ channel, show, handleClose, }) => {
-  
   const state = useSelector((state) => state)
   const { getRenamedChannelFromServer } = useContext(ApiContext);
   const dispatch = useDispatch();

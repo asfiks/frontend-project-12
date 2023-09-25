@@ -35,16 +35,16 @@ const getAddNewChannelFromServer = (newChannel) => {
     });
   };
 
-const getRenamedChannelFromServer = (data) => {
-  console.log(data)
-  socket.emit('renameChannel', { data}, (response) => {
+const getRenamedChannelFromServer = (channel) => {
+  console.log(channel)
+  socket.emit('renameChannel', channel , (response) => {
     if (response.status !== 'ok') {
       throw new Error('channel adding failed');
     }
   });
 
-  socket.on('renameChannel', (response) => {
-    dispatch(updateChannel(response))
+  socket.on('renameChannel', ({ id, name }) => {
+    dispatch(updateChannel({ id, name }))
     //dispatch(setCurrentChannelId(response.id))
     });
   };

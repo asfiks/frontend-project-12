@@ -16,7 +16,7 @@ const ChannelsBlock = () => {
 
     const [show, setShow] = useState(false);
     const [showRename, setShowRename] = useState(false);
-    const [dataForChange, setDataForChange] = useState(null)
+    const [dataForChange, setDataForChange] = useState({})
 
     const handleClose = () => {
         setShow(false);
@@ -35,6 +35,7 @@ const ChannelsBlock = () => {
         const changeChannelId = channel.id;
         dispatch(setCurrentChannelId(changeChannelId));
     }
+
 
     return (
         <>
@@ -77,12 +78,11 @@ const ChannelsBlock = () => {
 
                           <Dropdown.Menu>
                               <Dropdown.Item role='button' onClick={()=> console.log(channel.name)}>Удалить</Dropdown.Item>
-                              <Dropdown.Item role="button" onClick={() => {
+                              <Dropdown.Item role="button" onClick={() => { 
                                   
                                   setDataForChange(channel)
-                                  console.log(dataForChange)
                                   setShowRename(true)
-                                  }
+                              }
                                 }>Переименовать</Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
@@ -95,13 +95,12 @@ const ChannelsBlock = () => {
               channel={dataForChange}
               show={show}
               handleClose={handleClose}
-            /* setNewChannel={setNewChannel} */
             />
-    {/*         <RenameChannelModal
+            <RenameChannelModal
               channel={dataForChange}
               show={showRename}
               handleClose={handleClose}
-            /> */}
+            />
             
         </>            
     );
