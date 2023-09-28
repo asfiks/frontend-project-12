@@ -1,24 +1,23 @@
-import React, { useContext, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { ApiContext } from '../../contexts/ApiContext';
-import { selectorsChannels, setCurrentChannelId } from '../../slices/channelsSlice';
+import { selectorsChannels } from '../../slices/channelsSlice';
 import {Button, Modal, } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 
 
-export const RenameChannelModal = ({ channel, show, handleClose, }) => {
-  const state = useSelector((state) => state)
-  const { getRenamedChannelFromServer } = useContext(ApiContext);
-  const dispatch = useDispatch();
+export const RenameChannelModal = ({ id, show, handleClose, }) => {
+  const { renamedChannel } = useContext(ApiContext);
   const channels = useSelector(selectorsChannels.selectAll);
+  const [channelForRename] = channels.filter((ch) => ch.id === id)
   const namesAllChannels = channels.map((channel) => channel.name)
   const validationSchema = Yup.object({
       name: Yup.string().required('Поле "Введите имя" обязательно для заполнения').notOneOf(namesAllChannels, 'Канал с таким названием уже существуют')
     });
   const handleSubmit = async (values) => {
-      values.id = channel.id;
-      await getRenamedChannelFromServer(values);
+      values.id = id;
+      await renamedChannel(values);
       handleClose();
     }
 
@@ -34,7 +33,7 @@ export const RenameChannelModal = ({ channel, show, handleClose, }) => {
         </Modal.Header>
         <Modal.Body>
           <Formik
-            initialValues={{ name: channel.name }}
+            initialValues={{ name: channelForRename ? channelForRename.name : '' }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
             

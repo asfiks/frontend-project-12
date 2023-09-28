@@ -1,19 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-//import cn from 'classnames';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { ApiContext } from '../../contexts/ApiContext';
-import { selectorsChannels, setCurrentChannelId } from '../../slices/channelsSlice';
+import { selectorsChannels } from '../../slices/channelsSlice';
 import {Button, Modal, } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 
 
-export const AddChannelModal = ({ show, handleClose, /* setNewChannel */ }) => {
-  
-  const state = useSelector((state) => state)
+export const AddChannelModal = ({ show, handleClose }) => {
   const username  = localStorage.getItem('username');
   const { getAddNewChannelFromServer } = useContext(ApiContext);
-  const dispatch = useDispatch();
   const channels = useSelector(selectorsChannels.selectAll);
   const namesAllChannels = channels.map((channel) => channel.name)
   const validationSchema = Yup.object({

@@ -1,12 +1,7 @@
 import React from 'react';
-import { useContext, }  from 'react';
-/* import { useSelector, useDispatch } from 'react-redux';
-import { AuthContext } from '../contexts/AuthContext';
-import { fetchData, selectors } from '../slices/channelsSlice'; */
 import MessagesBlock from '../components/MessageBlock';
 import NavBlock from '../components/NavBlock';
 import ChannelsBlock from '../components/ChannelsBlock';
-import ModalAddChannel from '../components/ModalAddChannel';
 
 export const HomePage = () => {
   return (

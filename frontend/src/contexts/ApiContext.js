@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext } from 'react';
 import { socket } from '../socket.js';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '../slices/messagesSlice';
-import { addChannel, setCurrentChannelId, updateChannel } from '../slices/channelsSlice';
+import { addChannel, setCurrentChannelId, updateChannel, removeChannel } from '../slices/channelsSlice';
 
 
 export const ApiContext = createContext();
@@ -35,22 +35,33 @@ const getAddNewChannelFromServer = (newChannel) => {
     });
   };
 
-const getRenamedChannelFromServer = (channel) => {
-  console.log(channel)
+const renamedChannel = (channel) => {
   socket.emit('renameChannel', channel , (response) => {
     if (response.status !== 'ok') {
-      throw new Error('channel adding failed');
+      throw new Error('channel rename failed');
     }
   });
 
   socket.on('renameChannel', ({ id, name }) => {
-    dispatch(updateChannel({ id, name }))
-    //dispatch(setCurrentChannelId(response.id))
+    dispatch(updateChannel({ id, changes: { name } }))
+    });
+  };
+
+  const removeChannel = (channelId) => {
+    socket.emit('removeChannel', channelId, (response) => {
+      if (response.status !== 'ok') {
+        throw new Error('channel removing failed');
+      }
+    });
+
+
+    socket.on('removeChannel', ({ id }) => {
+      dispatch(removeChannel(id));
     });
   };
 
   return (
-    <ApiContext.Provider value={{ getNewMessage, getAddNewChannelFromServer, getRenamedChannelFromServer }}>
+    <ApiContext.Provider value={{ getNewMessage, getAddNewChannelFromServer, renamedChannel, removeChannel }}>
       {children}
     </ApiContext.Provider>
   );

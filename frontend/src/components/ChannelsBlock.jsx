@@ -1,14 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthContext } from '../contexts/AuthContext';
-import { ApiContext } from '../contexts/ApiContext';
 import { fetchData, selectorsChannels, setCurrentChannelId } from '../slices/channelsSlice';
-import {Button, Modal, Dropdown, ButtonGroup } from 'react-bootstrap';
-import * as Yup from 'yup';
-import { Formik, Form, Field } from 'formik';
-import { AddChannelModal } from './modals/AddChannelModal'
-import { RenameChannelModal } from './modals/RenameChannelModal'
+import {Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { AddChannelModal } from './modals/AddChannelModal';
+import { RenameChannelModal } from './modals/RenameChannelModal';
+import { RemoveChannelModal } from './modals/RemoveChannelModal'
 
 const ChannelsBlock = () => {
     const { token } = useContext(AuthContext);
@@ -16,12 +13,13 @@ const ChannelsBlock = () => {
 
     const [show, setShow] = useState(false);
     const [showRename, setShowRename] = useState(false);
-    const [dataForChange, setDataForChange] = useState({})
+    const [idForRename, setIdForRename] = useState('');
+    const [showRemove, setShowRemove] = useState(false);
 
     const handleClose = () => {
         setShow(false);
         setShowRename(false);
-        /* setNewChannel('') */
+        setShowRemove(false);
     }
    
     useEffect(() => {
@@ -77,10 +75,13 @@ const ChannelsBlock = () => {
                           />
 
                           <Dropdown.Menu>
-                              <Dropdown.Item role='button' onClick={()=> console.log(channel.name)}>Удалить</Dropdown.Item>
+                              <Dropdown.Item role='button' onClick={()=> {
+                                  setIdForRename(channel.id)
+                                  setShowRemove(true)                                
+                              }}>Удалить</Dropdown.Item>
                               <Dropdown.Item role="button" onClick={() => { 
                                   
-                                  setDataForChange(channel)
+                                  setIdForRename(channel.id)
                                   setShowRename(true)
                               }
                                 }>Переименовать</Dropdown.Item>
@@ -92,16 +93,19 @@ const ChannelsBlock = () => {
                 </ul>
             </div>
             <AddChannelModal
-              channel={dataForChange}
               show={show}
               handleClose={handleClose}
             />
             <RenameChannelModal
-              channel={dataForChange}
+              id={idForRename}
               show={showRename}
               handleClose={handleClose}
             />
-            
+            <RemoveChannelModal
+              id={idForRename}
+              show={showRemove}
+              handleClose={handleClose}              
+            />
         </>            
     );
 };
