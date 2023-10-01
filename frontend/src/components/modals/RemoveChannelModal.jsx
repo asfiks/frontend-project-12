@@ -7,10 +7,9 @@ import {Button, Modal, } from 'react-bootstrap';
 
 export const RemoveChannelModal = ({ id, show, handleClose }) => {
   const { removeChannel } = useContext(ApiContext);
-/*   const channels = useSelector(selectorsChannels.selectAll);
-  const [channelForRemove] = channels.filter((ch) => ch.id === id) */
+
   const handleClick = async (id) => {
-      await removeChannel( { id } );
+      await removeChannel({ 'id': id });
       handleClose();
     }
 

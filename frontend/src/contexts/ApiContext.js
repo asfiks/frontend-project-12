@@ -36,6 +36,7 @@ const getAddNewChannelFromServer = (newChannel) => {
   };
 
 const renamedChannel = (channel) => {
+  console.log(channel)
   socket.emit('renameChannel', channel , (response) => {
     if (response.status !== 'ok') {
       throw new Error('channel rename failed');
@@ -56,6 +57,7 @@ const renamedChannel = (channel) => {
 
 
     socket.on('removeChannel', ({ id }) => {
+      console.log(id)
       dispatch(removeChannel(id));
     });
   };
