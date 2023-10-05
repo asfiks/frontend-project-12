@@ -9,9 +9,9 @@ export const RemoveChannelModal = ({ id, show, handleClose }) => {
   const { removeChannel } = useContext(ApiContext);
 
   const handleClick = async (id) => {
-      await removeChannel({ 'id': id });
-      handleClose();
-    }
+    await removeChannel({ id });
+    handleClose();
+  }
 
   return (
     <Modal 

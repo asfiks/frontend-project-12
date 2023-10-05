@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import { socket } from '../socket.js';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '../slices/messagesSlice';
-import { addChannel, setCurrentChannelId, updateChannel, removeChannel } from '../slices/channelsSlice';
+import { addChannel, setCurrentChannelId, updateChannel, deleteChannel } from '../slices/channelsSlice';
 
 
 export const ApiContext = createContext();
@@ -49,16 +49,15 @@ const renamedChannel = (channel) => {
   };
 
   const removeChannel = (channelId) => {
+    console.log(channelId)
     socket.emit('removeChannel', channelId, (response) => {
       if (response.status !== 'ok') {
         throw new Error('channel removing failed');
       }
     });
 
-
     socket.on('removeChannel', ({ id }) => {
-      console.log(id)
-      dispatch(removeChannel(id));
+      dispatch(deleteChannel(id));
     });
   };
 

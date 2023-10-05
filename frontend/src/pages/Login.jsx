@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
 
-export const SignUp = () => {
+export const Login = () => {
     const { errorAuth, login } = useContext(AuthContext);
 
     const validationSchema = Yup.object({
