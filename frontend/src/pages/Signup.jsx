@@ -3,26 +3,41 @@ import { useContext, useState} from 'react';
 import * as formik from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
-import {Button, Modal, Form, InputGroup } from 'react-bootstrap';
+import {Button, Modal, Form, InputGroup, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
+import axios from 'axios';
+import api from '../routes/api';
+import { useNavigate  } from 'react-router-dom';
 
 export const Signup = () => {
-
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
     const validationSchema = Yup.object({
         username: Yup.string()
-            .min(4, '"Имя пользователя" минимум 4 символа')
+            .min(3, '"Имя пользователя" минимум 3 символа')
+            .max(20, '"Имя пользователя" максимум 20 символов')
             .required('Поле "Ваш ник" обязательно для заполнения'),
         password: Yup.string()
-            .required('Поле "Пароль" обязательно для заполнения')
-            .min(4, 'Пароль должен содержать минимум 4 символа'),
+            .min(6, 'Пароль должен содержать минимум 6 символов')
+            .required('Поле "Пароль" обязательно для заполнения'),
         passwordConfirm: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
             .required('Поле "Подтверждение пароля" обязательно для заполнения')
       });
 
-    const handleSubmit = (values) => {
-        
-        console.log(values)
+    const handleSubmit = async (values) => {
+        try {
+            await axios.post(api.signupPath(), values);
+            await login(values);
+            navigate('/');
+        } catch (error) {
+            if (error.response && error.response.status === 409) {
+                setError('Такое имя пользователя уже существует!!!');
+            } else {
+              console.error(error);
+            }
+        }
     }
 
     return (        
@@ -91,6 +106,7 @@ export const Signup = () => {
                                                         {errors.passwordConfirm}
                                                     </Form.Control.Feedback>                                                    
                                                 </Form.Group>
+                                                {error && <Alert variant='danger'>{error}</Alert>}
                                                 <Button variant="primary" className="w-100" type="submit">
                                                     Зарегистрироваться
                                                 </Button>
