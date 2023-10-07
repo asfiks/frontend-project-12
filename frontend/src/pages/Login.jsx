@@ -3,13 +3,17 @@ import { useContext, } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
+    const { t, i18next } = useTranslation();
     const { errorAuth, login } = useContext(AuthContext);
 
     const validationSchema = Yup.object({
-        username: Yup.string().required('Поле "Ваш ник" обязательно для заполнения'),
-        password: Yup.string().required('Поле "Пароль" обязательно для заполнения')
+        username: Yup.string()
+            .required('Поле "Ваш ник" обязательно для заполнения'),
+        password: Yup.string()
+            .required('Поле "Пароль" обязательно для заполнения')
       });
 
     const handleSubmit = async (values) => {
@@ -21,7 +25,7 @@ export const Login = () => {
                     <div className="d-flex flex-column vh-100">
                         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
                             <div className="container">
-                                <a className="navbar-brand" href="/">Project Chat</a>
+                                <a className="navbar-brand" href="/">{t('chat')}</a>
                             </div>
                         </nav>
                         <div className="container vh-100">
@@ -30,7 +34,7 @@ export const Login = () => {
                                     <div className="card shadow-sm">
                                         <div className="card-body row p-5">
                                             <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                                                <img src={image} className="rounded-circle" alt="Войти" />
+                                                <img src={image} className="rounded-circle" alt={t('login.enter')}/>
                                             </div>
                                             <Formik
                                                 initialValues={{ username: '', password: '' }}
@@ -39,16 +43,16 @@ export const Login = () => {
                                             >
                                                 {({ errors, touched }) => (
                                                     <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-                                                    <h1 className="text-center mb-4">Войти</h1>
+                                                    <h1 className="text-center mb-4">{t('login.enter')}</h1>
                                                     <div className="form-floating mb-3">
                                                         <Field
                                                         type="text"
                                                         id="username"
                                                         name="username"
-                                                        placeholder="Ваш ник"
+                                                        placeholder={t('login.name')}
                                                         className={`form-control ${errors.username && touched.username ? 'is-invalid' : null}`}
                                                         />
-                                                        <label htmlFor="username">Ваш ник</label>
+                                                        <label htmlFor="username">{t('login.name')}</label>
                                                         {errors.username && touched.username ? <div className="invalid-tooltip">{errors.username}</div> : null}
                                                         
                                                     </div>
@@ -57,10 +61,10 @@ export const Login = () => {
                                                         type="password"
                                                         id="password"
                                                         name="password"
-                                                        placeholder="Пароль"
+                                                        placeholder={t('login.password')}
                                                         className={`form-control ${(errors.password && touched.password) || errorAuth ? 'is-invalid' : null}`}
                                                         />
-                                                        <label className="form-label" htmlFor="password">Пароль</label>
+                                                        <label className="form-label" htmlFor="password">{t('login.password')}</label>
                                                         {errors.password && touched.password ? <div className="invalid-tooltip">{errors.password}</div> : null}
                                                         {errorAuth ? <div className="invalid-tooltip">{'Неверные учетные данные'}</div> : null } 
                                                     </div>
