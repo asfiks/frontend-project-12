@@ -5,15 +5,18 @@ import { selectorsChannels } from '../../slices/channelsSlice';
 import {Button, Modal, } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
-
+import { useTranslation } from 'react-i18next';
 
 export const RenameChannelModal = ({ id, show, handleClose, }) => {
+  const { t } = useTranslation();
   const { renamedChannel } = useContext(ApiContext);
   const channels = useSelector(selectorsChannels.selectAll);
   const [channelForRename] = channels.filter((ch) => ch.id === id)
   const namesAllChannels = channels.map((channel) => channel.name)
   const validationSchema = Yup.object({
-      name: Yup.string().required('Поле "Введите имя" обязательно для заполнения').notOneOf(namesAllChannels, 'Канал с таким названием уже существуют')
+      name: Yup.string()
+        .notOneOf(namesAllChannels, t('modalRemaneChannel.validation.uniq'))
+        .required(t('modalRemaneChannel.validation.name'))
     });
   const handleSubmit = async (values) => {
       values.id = id;
@@ -29,7 +32,7 @@ export const RenameChannelModal = ({ id, show, handleClose, }) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Переименовать канал</Modal.Title>
+          <Modal.Title>{t('modalRemaneChannel.renameChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -50,10 +53,10 @@ export const RenameChannelModal = ({ id, show, handleClose, }) => {
                 {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    Отменить
+                    {t('modalRemaneChannel.buttonCancel')}
                   </Button>
                   <Button variant="primary" type="submit">
-                    Отправить
+                    {t('modalRemaneChannel.buttonSend')}
                   </Button>
                 </Modal.Footer>
               </Form>

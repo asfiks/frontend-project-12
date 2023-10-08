@@ -8,22 +8,24 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import api from '../routes/api';
 import { useNavigate  } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const Signup = () => {
+    const { t } = useTranslation();
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
     const validationSchema = Yup.object({
         username: Yup.string()
-            .min(3, '"Имя пользователя" минимум 3 символа')
-            .max(20, '"Имя пользователя" максимум 20 символов')
-            .required('Поле "Ваш ник" обязательно для заполнения'),
+            .min(3, t('signup.validation.usernameMinMax'))
+            .max(20, t('signup.validation.usernameMinMax'))
+            .required(t('signup.validation.username')),
         password: Yup.string()
-            .min(6, 'Пароль должен содержать минимум 6 символов')
-            .required('Поле "Пароль" обязательно для заполнения'),
+            .min(6, t('signup.validation.passwordMin'))
+            .required(t('signup.validation.password')),
         passwordConfirm: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-            .required('Поле "Подтверждение пароля" обязательно для заполнения')
+            .oneOf([Yup.ref('password'), null], t('signup.validation.passConfirm'))
+            .required(t('signup.validation.password'))
       });
 
     const handleSubmit = async (values) => {
@@ -46,7 +48,7 @@ export const Signup = () => {
             <div className="d-flex flex-column vh-100">
                 <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
                     <div className="container">
-                        <a className="navbar-brand" href="/">Project Chat</a>
+                        <a className="navbar-brand" href="/">{t('chat')}</a>
                     </div>
                 </nav>
                 <div className="container vh-100">
@@ -65,11 +67,11 @@ export const Signup = () => {
                                     >
                                         {({ handleSubmit, handleChange, values, touched, errors }) => (
                                             <Form className="w-100" noValidate onSubmit={handleSubmit}>
-                                                <h1 className="text-center mb-4">Регистрация</h1>
+                                                <h1 className="text-center mb-4">{t('signup.registration')}</h1>
                                                 <Form.Group className="mb-3" controlId="username">
                                                         <Form.Control
                                                             type="text"
-                                                            placeholder="Имя пользователя"
+                                                            placeholder={t('signup.username')}
                                                             name="username"
                                                             value={values.username}
                                                             onChange={handleChange}
@@ -83,7 +85,7 @@ export const Signup = () => {
                                                 <Form.Group className="mb-3" controlId="password">
                                                     <Form.Control 
                                                         type="password" 
-                                                        placeholder="Пароль"
+                                                        placeholder={t('signup.password')}
                                                         name="password"
                                                         value={values.password}
                                                         onChange={handleChange}
@@ -96,7 +98,7 @@ export const Signup = () => {
                                                 <Form.Group className="mb-3" controlId="passwordConfirm">
                                                     <Form.Control 
                                                         type="password" 
-                                                        placeholder="Пароль"
+                                                        placeholder={t('signup.passConfirm')}
                                                         name="passwordConfirm"
                                                         value={values.passwordConfirm}
                                                         onChange={handleChange}
@@ -108,7 +110,7 @@ export const Signup = () => {
                                                 </Form.Group>
                                                 {error && <Alert variant='danger'>{error}</Alert>}
                                                 <Button variant="primary" className="w-100" type="submit">
-                                                    Зарегистрироваться
+                                                {t('signup.signup')}
                                                 </Button>
                                             </Form>
                                         )}

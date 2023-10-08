@@ -6,14 +6,14 @@ import { AuthContext } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
-    const { t, i18next } = useTranslation();
+    const { t } = useTranslation();
     const { errorAuth, login } = useContext(AuthContext);
 
     const validationSchema = Yup.object({
         username: Yup.string()
-            .required('Поле "Ваш ник" обязательно для заполнения'),
+            .required(t('login.validation.name')),
         password: Yup.string()
-            .required('Поле "Пароль" обязательно для заполнения')
+            .required(t('login.validation.password'))
       });
 
     const handleSubmit = async (values) => {
@@ -66,10 +66,10 @@ export const Login = () => {
                                                         />
                                                         <label className="form-label" htmlFor="password">{t('login.password')}</label>
                                                         {errors.password && touched.password ? <div className="invalid-tooltip">{errors.password}</div> : null}
-                                                        {errorAuth ? <div className="invalid-tooltip">{'Неверные учетные данные'}</div> : null } 
+                                                        {errorAuth ? <div className="invalid-tooltip">{t('login.validation.errorAuth')}</div> : null } 
                                                     </div>
                                                     <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
-                                                        Войти
+                                                        {t('login.enter')}
                                                     </button>
                                                     </Form>
                                                 )}
@@ -77,8 +77,8 @@ export const Login = () => {
                                     </div>
                                     <div className="card-footer p-4">
                                         <div className="text-center">
-                                            <span>Нет аккаунта? </span>
-                                            <a href="/signup">Регистрация</a>
+                                            <span>{t('login.noAcc')}</span>
+                                            <a href="/signup">{t('login.signup')}</a>
                                         </div>
                                     </div>
                                 </div>

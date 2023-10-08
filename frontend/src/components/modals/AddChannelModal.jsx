@@ -5,20 +5,20 @@ import { selectorsChannels } from '../../slices/channelsSlice';
 import {Button, Modal, } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
-
+import { useTranslation } from 'react-i18next';
 
 export const AddChannelModal = ({ show, handleClose }) => {
+  const { t } = useTranslation();
   const username  = localStorage.getItem('username');
   const { getAddNewChannelFromServer } = useContext(ApiContext);
   const channels = useSelector(selectorsChannels.selectAll);
   const namesAllChannels = channels.map((channel) => channel.name)
   const validationSchema = Yup.object({
-      name: Yup.string().required('Поле "Введите имя" обязательно для заполнения').notOneOf(namesAllChannels, 'Канал с таким названием уже существуют')
+      name: Yup.string()
+        .notOneOf(namesAllChannels, t('modalAdd.validation.uniq'))
+        .required(t('modalAdd.validation.name'))
     });
-/*     useEffect(() => {
-      console.log(state)
-    }, state) */
-  
+
   const handleSubmit = async (values) => {
     values.username = username;
     await getAddNewChannelFromServer(values);
@@ -33,7 +33,7 @@ export const AddChannelModal = ({ show, handleClose }) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>{t('modalAdd.addChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -53,10 +53,10 @@ export const AddChannelModal = ({ show, handleClose }) => {
                 {errors.name && touched.name ? <div className="invalid-tooltip">{errors.name}</div> : null}
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    Отменить
+                    {t('modalAdd.buttonCancel')}
                   </Button>
                   <Button variant="primary" type="submit">
-                    Создать канал
+                    {t('modalAdd.buttonCreate')}
                   </Button>
                 </Modal.Footer>
               </Form>
