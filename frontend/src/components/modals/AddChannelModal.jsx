@@ -6,9 +6,12 @@ import {Button, Modal, } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AddChannelModal = ({ show, handleClose }) => {
   const { t } = useTranslation();
+  //toast("Wow so easy!");
   const username  = localStorage.getItem('username');
   const { getAddNewChannelFromServer } = useContext(ApiContext);
   const channels = useSelector(selectorsChannels.selectAll);
@@ -21,8 +24,14 @@ export const AddChannelModal = ({ show, handleClose }) => {
 
   const handleSubmit = async (values) => {
     values.username = username;
-    await getAddNewChannelFromServer(values);
-    handleClose();
+    try {
+      await getAddNewChannelFromServer(values);
+      toast("тест тестов");
+      handleClose();
+    } catch (error) {
+      console.error(error)
+    }
+
   }
 
   return (

@@ -7,6 +7,7 @@ import { AddChannelModal } from './modals/AddChannelModal';
 import { RenameChannelModal } from './modals/RenameChannelModal';
 import { RemoveChannelModal } from './modals/RemoveChannelModal';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 
 const ChannelsBlock = () => {
     const { t } = useTranslation();
@@ -108,6 +109,7 @@ const ChannelsBlock = () => {
               show={showRemove}
               handleClose={handleClose}              
             />
+          <ToastContainer />
         </>            
     );
 };
