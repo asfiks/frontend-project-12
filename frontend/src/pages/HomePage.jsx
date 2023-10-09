@@ -2,6 +2,7 @@ import React from 'react';
 import MessagesBlock from '../components/MessageBlock';
 import NavBlock from '../components/NavBlock';
 import ChannelsBlock from '../components/ChannelsBlock';
+import { ToastContainer } from 'react-toastify';
 
 export const HomePage = () => {
   return (
@@ -16,7 +17,7 @@ export const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="Toastify"></div>
+        <ToastContainer />
       </div>
     </div>
   );

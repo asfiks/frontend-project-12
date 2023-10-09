@@ -35,7 +35,7 @@ export const Signup = () => {
             navigate('/');
         } catch (error) {
             if (error.response && error.response.status === 409) {
-                setError('Такое имя пользователя уже существует!!!');
+                setError(t('signup.validation.usernameIsHas'));
             } else {
               console.error(error);
             }

@@ -4,13 +4,22 @@ import { ApiContext } from '../../contexts/ApiContext';
 import { selectorsChannels } from '../../slices/channelsSlice';
 import {Button, Modal, } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import properties from '../toastProp';
 
 export const RemoveChannelModal = ({ id, show, handleClose }) => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
   const handleClick = async (id) => {
-    await removeChannel({ id });
-    handleClose();
+    try{
+      await removeChannel({ id });
+      toast.success(t('toast.remove'), properties);
+      handleClose();
+    } catch (error) {
+      toast.error(t('toast.error'), properties);
+      console.error(error)
+    }
   }
 
   return (

@@ -5,9 +5,10 @@ import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectorsMessages, addMessage } from '../slices/messagesSlice';
 import { selectorsChannels } from '../slices/channelsSlice';
 import { ApiContext } from '../contexts/ApiContext';
+import { useTranslation } from 'react-i18next';
 
 const MessagesBlock = () => {
-
+    const { t } = useTranslation();
     const { token } = useContext(AuthContext);
     const username = localStorage.getItem('username')
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const MessagesBlock = () => {
     const { currentChannelId } = useSelector((state) => state.channels);
     const actualMessages = messages.filter((m) => m.channelId === currentChannelId)
     const channels = useSelector(selectorsChannels.selectAll);
-
+    const currentCount = actualMessages.length;
     const nameCurrentChannel = (channels) => {
         const curentChannel = channels.find((channel) => currentChannelId === channel.id);
         return curentChannel ? curentChannel.name : null;
@@ -30,14 +31,16 @@ const MessagesBlock = () => {
     }, []);
 
     const handleSubmit = (message, { resetForm }) => {
-      const dataForServer = {
-        'channelId': currentChannelId,
-        'username': username,
-        'message': message.body,
+      if (message.body.trim().length !== 0) {
+        const dataForServer = {
+          'channelId': currentChannelId,
+          'username': username,
+          'message': message.body,
+        }
+        getNewMessage(dataForServer);
+        resetForm();
+        inputRef.current.focus();
       }
-      getNewMessage(dataForServer);
-      resetForm();
-      inputRef.current.focus();
     }
     
     return (
@@ -45,7 +48,7 @@ const MessagesBlock = () => {
         <div className="d-flex flex-column h-100">
           <div className="bg-light mb-4 p-3 shadow-sm small">
             <p className="m-0"><b># {nameCurrentChannel(channels)}</b></p>
-            <span className="text-muted">0 сообщений</span>
+            <span className="text-muted">{t('messages.counter.key', { count: currentCount })}</span>
           </div>
           <div id="messages-box" className="chat-messages overflow-auto px-5 ">
             {actualMessages.map((m) => (
@@ -59,8 +62,8 @@ const MessagesBlock = () => {
               <Form noValidate className="py-1 border rounded-2">
                 <div className="input-group has-validation">
                   <Field name="body"
-                    aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
+                    aria-label={t('messages.new')}
+                    placeholder={t('messages.input')}
                     className="border-0 p-0 ps-2 form-control"
                     innerRef={inputRef}  
                   />

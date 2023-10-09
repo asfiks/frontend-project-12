@@ -109,7 +109,6 @@ const ChannelsBlock = () => {
               show={showRemove}
               handleClose={handleClose}              
             />
-          <ToastContainer />
         </>            
     );
 };

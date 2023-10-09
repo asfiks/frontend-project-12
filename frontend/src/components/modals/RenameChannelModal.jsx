@@ -6,6 +6,9 @@ import {Button, Modal, } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import properties from '../toastProp';
 
 export const RenameChannelModal = ({ id, show, handleClose, }) => {
   const { t } = useTranslation();
@@ -19,10 +22,16 @@ export const RenameChannelModal = ({ id, show, handleClose, }) => {
         .required(t('modalRemaneChannel.validation.name'))
     });
   const handleSubmit = async (values) => {
-      values.id = id;
-      await renamedChannel(values);
-      handleClose();
-    }
+      try {
+        values.id = id;
+        await renamedChannel(values);
+        toast.success(t('toast.rename'), properties);
+        handleClose();
+      } catch (error) {
+        toast.error(t('toast.rename'), properties);
+        console.error(error);
+      }
+  }
 
   return (
       <Modal

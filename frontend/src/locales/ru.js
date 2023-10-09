@@ -27,6 +27,7 @@ export default {
                 passwordMin: 'Не менее 6 символов',
                 passConfirm: 'Пароли должны совпадать',
                 errorSignup: 'Такой пользователь уже существует',
+                usernameIsHas: 'Такой пользователь уже существует',
             },
         },
         channels: {
@@ -60,6 +61,21 @@ export default {
                 name: 'Обязательное поле',
             },
         },
-
-    },
+        messages: {
+            counter: {
+              key_zero: '{{count}} сообщений',
+              key_one: '{{count}} сообщение',
+              key_few: '{{count}} сообщения',
+              key_many: '{{count}} сообщений',
+            },
+            new: 'Новое сообщение',
+            input: 'Введите сообщение...',
+        },
+        toast: {
+            remove: 'Канал удалён',
+            add: 'Канал создан',
+            rename: 'Канал переименован',
+            error: 'Ошибка',
+        }
+    }
 };

@@ -86,7 +86,6 @@ export const Login = () => {
                         </div>
                     </div>
                 </div>
-                <div className="Toastify"> </div>
                 </div>
             </div>
 
