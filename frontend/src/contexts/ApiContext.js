@@ -24,7 +24,9 @@ export const ApiProvider = ({ children }) => {
 
 const getAddNewChannelFromServer = (newChannel) => {
   socket.emit('newChannel', newChannel, (response) => {
+    console.log(response)
     if (response.status !== 'ok') {
+      
       throw new Error('channel adding failed');
     }
   });
@@ -36,7 +38,6 @@ const getAddNewChannelFromServer = (newChannel) => {
   };
 
 const renamedChannel = (channel) => {
-  console.log(channel)
   socket.emit('renameChannel', channel , (response) => {
     if (response.status !== 'ok') {
       throw new Error('channel rename failed');
@@ -49,7 +50,6 @@ const renamedChannel = (channel) => {
   };
 
   const removeChannel = (channelId) => {
-    console.log(channelId)
     socket.emit('removeChannel', channelId, (response) => {
       if (response.status !== 'ok') {
         throw new Error('channel removing failed');

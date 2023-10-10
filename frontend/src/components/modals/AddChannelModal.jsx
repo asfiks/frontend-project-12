@@ -30,7 +30,7 @@ export const AddChannelModal = ({ show, handleClose }) => {
       handleClose();
     } catch (error) {
       toast.error(t('toast.error'), properties);
-      console.error(error)
+      console.error(error);
     }
   }
 

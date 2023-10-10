@@ -6,6 +6,8 @@ import { fetchData, selectorsMessages, addMessage } from '../slices/messagesSlic
 import { selectorsChannels } from '../slices/channelsSlice';
 import { ApiContext } from '../contexts/ApiContext';
 import { useTranslation } from 'react-i18next';
+import LeoProfanity  from 'leo-profanity';
+import dict from '../locales/censor'
 
 const MessagesBlock = () => {
     const { t } = useTranslation();
@@ -13,8 +15,10 @@ const MessagesBlock = () => {
     const username = localStorage.getItem('username')
     const dispatch = useDispatch();
     const inputRef = useRef();
-
     const { getNewMessage } = useContext(ApiContext);
+
+    const filter = LeoProfanity;
+    filter.addDictionary('ru', dict)
 
     const messages = useSelector(selectorsMessages.selectAll);
     const { currentChannelId } = useSelector((state) => state.channels);
@@ -35,7 +39,7 @@ const MessagesBlock = () => {
         const dataForServer = {
           'channelId': currentChannelId,
           'username': username,
-          'message': message.body,
+          'message': filter.clean(message.body)
         }
         getNewMessage(dataForServer);
         resetForm();
