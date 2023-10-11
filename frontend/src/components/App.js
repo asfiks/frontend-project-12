@@ -8,7 +8,8 @@ import { NotFoundPage } from '../pages/NotFoundPage';
 import { HomePage } from '../pages/HomePage';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import ru from '../locales/ru.js'
+import ru from '../locales/ru.js';
+import { ProtectedPage } from './ProtectedPage';
 
 const App = () => {
   i18next 
@@ -20,9 +21,7 @@ const App = () => {
 
   const { token } = useContext(AuthContext);
   useEffect(() => {    
-    if (token) {
-      return <Navigate to="/" />
-    }
+    <Route path="/" element={<ProtectedPage><HomePage /></ProtectedPage>} />
   });
 
   return (
