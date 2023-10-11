@@ -9,7 +9,7 @@ import { HomePage } from '../pages/HomePage';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import ru from '../locales/ru.js';
-import { ProtectedPage } from './ProtectedPage';
+/* import { ProtectedPage }  from './ProtectedPage'; */
 
 const App = () => {
   i18next 
@@ -20,14 +20,12 @@ const App = () => {
     });
 
   const { token } = useContext(AuthContext);
-  useEffect(() => {    
-    <Route path="/" element={<ProtectedPage><HomePage /></ProtectedPage>} />
-  });
 
   return (
     <I18nextProvider i18next={i18next}>
       <BrowserRouter>
         <Routes>
+          {/* <Route path="/" element={<ProtectedPage><HomePage /></ProtectedPage>} /> */}
           <Route path="/" element={token ? <HomePage /> : <Login />} />
           <Route path="/login" element={token ? <HomePage /> : <Login />} />
           <Route path="/signup" element={token ? <Signup /> : <Signup />} />
