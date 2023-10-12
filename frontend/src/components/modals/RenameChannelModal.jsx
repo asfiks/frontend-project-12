@@ -19,6 +19,8 @@ export const RenameChannelModal = ({ id, show, handleClose, }) => {
   const validationSchema = Yup.object({
       name: Yup.string()
         .notOneOf(namesAllChannels, t('modalRemaneChannel.validation.uniq'))
+        .min(3, t('modalAdd.validation.nameMinMax'))
+        .max(20, t('modalAdd.validation.nameMinMax'))
         .required(t('modalRemaneChannel.validation.name'))
     });
   const handleSubmit = async (values) => {

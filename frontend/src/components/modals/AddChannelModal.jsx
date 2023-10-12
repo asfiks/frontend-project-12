@@ -19,6 +19,8 @@ export const AddChannelModal = ({ show, handleClose }) => {
   const validationSchema = Yup.object({
       name: Yup.string()
         .notOneOf(namesAllChannels, t('modalAdd.validation.uniq'))
+        .min(3, t('modalAdd.validation.nameMinMax'))
+        .max(20, t('modalAdd.validation.nameMinMax'))
         .required(t('modalAdd.validation.name'))
     });
 

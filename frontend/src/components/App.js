@@ -1,39 +1,37 @@
-import React, { useContext, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.css';
-import { AuthContext } from '../contexts/AuthContext';
-import { Login } from '../pages/Login';
-import { Signup } from '../pages/Signup';
-import { NotFoundPage } from '../pages/NotFoundPage';
-import { HomePage } from '../pages/HomePage';
-import i18next from 'i18next';
-import { I18nextProvider, initReactI18next } from 'react-i18next';
-import ru from '../locales/ru.js';
-/* import { ProtectedPage }  from './ProtectedPage'; */
+import React, { useContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import { AuthContext } from "../contexts/AuthContext";
+import { Login } from "../pages/Login";
+import { Signup } from "../pages/Signup";
+import { NotFoundPage } from "../pages/NotFoundPage";
+import { HomePage } from "../pages/HomePage";
+import i18next from "i18next";
+import { I18nextProvider, initReactI18next } from "react-i18next";
+import ru from "../locales/ru.js";
 
 const App = () => {
-  i18next 
-    .use(initReactI18next)
-    .init({
-      resources: { ru },
-      lng: 'ru',
-    });
+	i18next 
+		.use(initReactI18next)
+		.init({
+			resources: { ru },
+			lng: "ru",
+		});
 
-  const { token } = useContext(AuthContext);
+	const { token } = useContext(AuthContext);
 
-  return (
-    <I18nextProvider i18next={i18next}>
-      <BrowserRouter>
-        <Routes>
-          {/* <Route path="/" element={<ProtectedPage><HomePage /></ProtectedPage>} /> */}
-          <Route path="/" element={token ? <HomePage /> : <Login />} />
-          <Route path="/login" element={token ? <HomePage /> : <Login />} />
-          <Route path="/signup" element={token ? <Signup /> : <Signup />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-    </I18nextProvider>
-  );
+	return (
+		<I18nextProvider i18next={i18next}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={token ? <HomePage /> : <Login />} />
+					<Route path="/login" element={token ? <HomePage /> : <Login />} />
+					<Route path="/signup" element={token ? <Signup /> : <Signup />} />
+					<Route path="*" element={<NotFoundPage />} />
+				</Routes>
+			</BrowserRouter>
+		</I18nextProvider>
+	);
 };
 
 export default App;
