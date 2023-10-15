@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { socket } from '../socket.js';
+import { socket } from '../socket';
 import { addMessage } from '../slices/messagesSlice';
 import {
   addChannel, setCurrentChannelId, updateChannel, deleteChannel,
