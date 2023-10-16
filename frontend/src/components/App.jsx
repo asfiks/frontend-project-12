@@ -13,6 +13,11 @@ import { NotFoundPage } from '../pages/NotFoundPage';
 import { HomePage } from '../pages/HomePage';
 import ru from '../locales/ru';
 
+const StartRoute = () => {
+  const { token } = useContext(AuthContext);
+  return token ? <HomePage /> : <Login />;
+};
+
 const App = () => {
   i18next
     .use(initReactI18next)
@@ -21,8 +26,8 @@ const App = () => {
       lng: 'ru',
     });
 
-  const { token } = useContext(AuthContext);
-  
+  const token = localStorage.getItem('token');
+
   return (
     <Provider store={store}>
       <ApiProvider>
@@ -30,7 +35,7 @@ const App = () => {
           <I18nextProvider i18next={i18next}>
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={token ? <HomePage /> : <Login />} />
+                <Route path="/" element={<StartRoute />} />
                 <Route path="/login" element={token ? <HomePage /> : <Login />} />
                 <Route path="/signup" element={token ? <Signup /> : <Signup />} />
                 <Route path="*" element={<NotFoundPage />} />
