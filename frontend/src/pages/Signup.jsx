@@ -68,43 +68,48 @@ export const Signup = () => {
                                         {({ handleSubmit, handleChange, values, touched, errors }) => (
                                             <Form className="w-100" noValidate onSubmit={handleSubmit}>
                                                 <h1 className="text-center mb-4">{t('signup.registration')}</h1>
-                                                <Form.Group className="mb-3" controlId="username">
+                                                <Form.Group className="form-floating mb-3" controlId="username">
                                                         <Form.Control
                                                             type="text"
+                                                            id="username"
                                                             placeholder={t('signup.username')}
                                                             name="username"
                                                             value={values.username}
                                                             onChange={handleChange}
-                                                            autoFocus
                                                             isInvalid={touched.username && !!errors.username}
                                                         />
+                                                        <Form.Label htmlFor="username">{t('signup.username')}</Form.Label>
                                                         <Form.Control.Feedback type="invalid">
                                                             {errors.username}
                                                         </Form.Control.Feedback>
                                                     
                                                 </Form.Group>
-                                                <Form.Group className="mb-3" controlId="password">
+                                                <Form.Group className="form-floating mb-3" controlId="password">
                                                     <Form.Control 
-                                                        type="password" 
+                                                        type="password"
+                                                        id="password"
                                                         placeholder={t('signup.password')}
                                                         name="password"
                                                         value={values.password}
                                                         onChange={handleChange}
                                                         isInvalid={touched.password && !!errors.password}
                                                     />
+                                                    <Form.Label htmlFor="password">{t('signup.password')}</Form.Label>
                                                     <Form.Control.Feedback type="invalid">
                                                         {errors.password}
                                                     </Form.Control.Feedback>                                                    
                                                 </Form.Group>
-                                                <Form.Group className="mb-3" controlId="passwordConfirm">
+                                                <Form.Group className="form-floating mb-3" controlId="passwordConfirm">
                                                     <Form.Control 
-                                                        type="password" 
+                                                        type="password"
+                                                        id="passwordConfirm"
                                                         placeholder={t('signup.passConfirm')}
                                                         name="passwordConfirm"
                                                         value={values.passwordConfirm}
                                                         onChange={handleChange}
                                                         isInvalid={touched.passwordConfirm && !!errors.passwordConfirm}
                                                     />
+                                                    <Form.Label htmlFor="passConfirm">{t('signup.passConfirm')}</Form.Label>
                                                     <Form.Control.Feedback type="invalid">
                                                         {errors.passwordConfirm}
                                                     </Form.Control.Feedback>                                                    
