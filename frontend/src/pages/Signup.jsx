@@ -75,6 +75,7 @@ export const Signup = () => {
                                                             name="username"
                                                             value={values.username}
                                                             onChange={handleChange}
+                                                            autoFocus
                                                             isInvalid={touched.username && !!errors.username}
                                                         />
                                                         <Form.Control.Feedback type="invalid">

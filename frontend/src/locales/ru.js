@@ -18,7 +18,7 @@ export default {
       registration: 'Регистрация',
       username: 'Имя пользователя',
       password: 'Пароль',
-      passConfirm: 'Подтвердите Пароль',
+      passConfirm: 'Подтвердите пароль',
       signup: 'Зарегистрироваться',
       validation: {
         username: 'Обязательное поле',

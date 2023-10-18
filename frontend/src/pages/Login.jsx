@@ -1,5 +1,5 @@
 import image from '../components/forLogin.png';
-import { useContext, } from 'react';
+import { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
@@ -50,6 +50,7 @@ export const Login = () => {
                                                         id="username"
                                                         name="username"
                                                         placeholder={t('login.name')}
+                                                        autoFocus
                                                         className={`form-control ${errors.username && touched.username ? 'is-invalid' : null}`}
                                                         />
                                                         <label htmlFor="username">{t('login.name')}</label>
