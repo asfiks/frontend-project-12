@@ -17,15 +17,15 @@ export const Signup = () => {
     const { login } = useContext(AuthContext);
     const validationSchema = Yup.object({
         username: Yup.string()
+            .required(t('signup.validation.username'))
             .min(3, t('signup.validation.usernameMinMax'))
-            .max(20, t('signup.validation.usernameMinMax'))
-            .required(t('signup.validation.username')),
+            .max(20, t('signup.validation.usernameMinMax')),
         password: Yup.string()
-            .min(6, t('signup.validation.passwordMin'))
             .required(t('signup.validation.password')),
+            .min(6, t('signup.validation.passwordMin')),
         passwordConfirm: Yup.string()
-            .oneOf([Yup.ref('password'), null], t('signup.validation.passConfirm'))
             .required(t('signup.validation.password'))
+            .oneOf([Yup.ref('password'), null], t('signup.validation.passConfirm')),
       });
 
     const handleSubmit = async (values) => {
