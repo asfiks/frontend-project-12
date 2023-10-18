@@ -21,7 +21,7 @@ export const Signup = () => {
             .min(3, t('signup.validation.usernameMinMax'))
             .max(20, t('signup.validation.usernameMinMax')),
         password: Yup.string()
-            .required(t('signup.validation.password')),
+            .required(t('signup.validation.password'))
             .min(6, t('signup.validation.passwordMin')),
         passwordConfirm: Yup.string()
             .required(t('signup.validation.password'))
