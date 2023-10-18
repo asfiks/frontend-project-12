@@ -17,15 +17,15 @@ export const Signup = () => {
     const { login } = useContext(AuthContext);
     const validationSchema = Yup.object({
         username: Yup.string()
-            .required(t('signup.validation.username'))
             .min(3, t('signup.validation.usernameMinMax'))
-            .max(20, t('signup.validation.usernameMinMax')),
+            .max(20, t('signup.validation.usernameMinMax'))
+            .required(t('signup.validation.username')),
         password: Yup.string()
-            .required(t('signup.validation.password'))
-            .min(6, t('signup.validation.passwordMin')),
+            .min(6, t('signup.validation.passwordMin'))
+            .required(t('signup.validation.password')),
         passwordConfirm: Yup.string()
-            .required(t('signup.validation.password'))
-            .oneOf([Yup.ref('password'), null], t('signup.validation.passConfirm')),
+            .oneOf([Yup.ref('password'), null], t('signup.validation.passConfirm'))
+            .required(t('signup.validation.password')),
       });
 
     const handleSubmit = async (values) => {
@@ -76,6 +76,7 @@ export const Signup = () => {
                                                             name="username"
                                                             value={values.username}
                                                             onChange={handleChange}
+                                                            autoFocus
                                                             isInvalid={touched.username && !!errors.username}
                                                         />
                                                         <Form.Label htmlFor="username">{t('signup.username')}</Form.Label>
