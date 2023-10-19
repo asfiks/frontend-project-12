@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { ApiContext } from '../../contexts/ApiContext';
 import { selectorsChannels } from '../../slices/channelsSlice';
-import {Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 import * as Yup from'yup';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';

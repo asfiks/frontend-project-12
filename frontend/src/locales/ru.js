@@ -56,6 +56,7 @@ export default {
     },
     modalRemaneChannel: {
       renameChannel: 'Переименовать канал',
+      name: 'Имя канала',
       buttonCancel: 'Отменить',
       buttonSend: 'Отправить',
       validation: {
