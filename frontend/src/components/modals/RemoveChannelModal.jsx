@@ -26,6 +26,7 @@ export const RemoveChannelModal = ({ id, show, handleClose }) => {
     <Modal 
       onHide={handleClose}
       show={show}
+      centered
     >
         <Modal.Header closeButton>
           <Modal.Title>{t('modalRemoveChannel.removeChannel')}</Modal.Title>
@@ -37,7 +38,7 @@ export const RemoveChannelModal = ({ id, show, handleClose }) => {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>{t('modalRemoveChannel.buttonCancel')}</Button>
-          <Button variant="primary"onClick={async ()=> await handleClick(id)}>{t('modalRemoveChannel.buttonRemove')}</Button>
+          <Button variant="danger" onClick={async ()=> await handleClick(id)}>{t('modalRemoveChannel.buttonRemove')}</Button>
         </Modal.Footer>
       </Modal>
     );

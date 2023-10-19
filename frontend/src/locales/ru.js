@@ -32,9 +32,9 @@ export default {
     },
     channels: {
       channels: 'Каналы',
-      buttonAdd: '+',
       symbolChannel: '#',
       remove: 'Удалить',
+      menu: 'Управление каналом',
       rename: 'Переименовать',
     },
     modalAdd: {

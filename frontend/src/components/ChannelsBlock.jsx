@@ -65,7 +65,6 @@ const ChannelsBlock = () => {
                         </Button>
                       ) : (
                         <Dropdown as={ButtonGroup} className="d-flex">
-                          
                           <Button
                             onClick={() => handleClick(channel)}
                             variant={channel.id === currentChannelId ? "secondary" : "light"}>
@@ -76,16 +75,14 @@ const ChannelsBlock = () => {
                             variant={channel.id === currentChannelId ? "secondary" : "light"}
                             id="dropdown-split-basic"
                           > 
-                          <span class="visually-hidden">Управление каналом</span>
+                            <span class="visually-hidden">{t('channels.menu')}</span>
                           </Dropdown.Toggle>
-                          
                           <Dropdown.Menu>
                               <Dropdown.Item role='button' onClick={()=> {
                                   setIdForRename(channel.id)
                                   setShowRemove(true)                                
                               }}>{t('channels.remove')}</Dropdown.Item>
                               <Dropdown.Item role="button" onClick={() => { 
-                                  
                                   setIdForRename(channel.id)
                                   setShowRename(true)
                               }
