@@ -18,7 +18,7 @@ const MessagesBlock = () => {
     const { getNewMessage } = useContext(ApiContext);
 
     const filter = LeoProfanity;
-    filter.addDictionary('ru', dict)
+    //filter.addDictionary('ru', dict)
 
     const messages = useSelector(selectorsMessages.selectAll);
     const { currentChannelId } = useSelector((state) => state.channels);
