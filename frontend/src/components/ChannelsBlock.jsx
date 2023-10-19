@@ -74,9 +74,11 @@ const ChannelsBlock = () => {
                           
                           <Dropdown.Toggle split 
                             variant={channel.id === currentChannelId ? "secondary" : "light"}
-                            id="dropdown-split-basic" 
-                          />
-
+                            id="dropdown-split-basic"
+                          > 
+                          <span class="visually-hidden">Управление каналом</span>
+                          </Dropdown.Toggle>
+                          
                           <Dropdown.Menu>
                               <Dropdown.Item role='button' onClick={()=> {
                                   setIdForRename(channel.id)
