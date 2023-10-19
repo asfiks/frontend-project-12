@@ -109,7 +109,7 @@ export const Signup = () => {
                                                         onChange={handleChange}
                                                         isInvalid={touched.passwordConfirm && !!errors.passwordConfirm}
                                                     />
-                                                    <Form.Label htmlFor="passConfirm">{t('signup.passConfirm')}</Form.Label>
+                                                    <Form.Label htmlFor="passwordConfirm">{t('signup.passConfirm')}</Form.Label>
                                                     <Form.Control.Feedback type="invalid">
                                                         {errors.passwordConfirm}
                                                     </Form.Control.Feedback>                                                    
