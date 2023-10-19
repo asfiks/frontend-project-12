@@ -1,9 +1,8 @@
 import image from '../components/forLogin.png';
 import { useContext, useState} from 'react';
-import * as formik from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/AuthContext';
-import {Button, Modal, Form, InputGroup, Alert } from 'react-bootstrap';
+import {Button, Form,  Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import axios from 'axios';
 import api from '../routes/api';
@@ -68,7 +67,7 @@ export const Signup = () => {
                                         {({ handleSubmit, handleChange, values, touched, errors }) => (
                                             <Form className="w-100" noValidate onSubmit={handleSubmit}>
                                                 <h1 className="text-center mb-4">{t('signup.registration')}</h1>
-                                                <Form.Group className="form-floating mb-3" controlId="username">
+                                                <Form.Group className="form-floating mb-3">
                                                         <Form.Control
                                                             type="text"
                                                             id="username"
@@ -85,7 +84,7 @@ export const Signup = () => {
                                                         </Form.Control.Feedback>
                                                     
                                                 </Form.Group>
-                                                <Form.Group className="form-floating mb-3" controlId="password">
+                                                <Form.Group className="form-floating mb-3">
                                                     <Form.Control 
                                                         type="password"
                                                         id="password"
@@ -100,7 +99,7 @@ export const Signup = () => {
                                                         {errors.password}
                                                     </Form.Control.Feedback>                                                    
                                                 </Form.Group>
-                                                <Form.Group className="form-floating mb-3" controlId="passwordConfirm">
+                                                <Form.Group className="form-floating mb-3">
                                                     <Form.Control 
                                                         type="password"
                                                         id="passwordConfirm"

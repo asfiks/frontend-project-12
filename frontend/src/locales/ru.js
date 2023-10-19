@@ -41,6 +41,7 @@ export default {
       addChannel: 'Добавить канал',
       buttonCreate: 'Создать канал',
       buttonCancel: 'Отменить',
+      name: 'Имя канала',
       validation: {
         uniq: 'Должно быть уникальным',
         nameMinMax: 'От 3 до 20 символов',
