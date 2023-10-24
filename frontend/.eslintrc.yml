@@ -2,6 +2,8 @@ env:
   browser: true
   es2021: true
 
+parser: "@babel/eslint-parser"
+
 extends:
   - airbnb
   - plugin:react/recommended
@@ -9,10 +11,14 @@ extends:
   - plugin:react-hooks/recommended
 
 parserOptions:
+  babelOptions:
+    presets: 
+    - '@babel/preset-react'
   ecmaFeatures:
     jsx: true
   ecmaVersion: latest
   sourceType: module
+  requireConfigFile: false
 
 plugins:
   - react
