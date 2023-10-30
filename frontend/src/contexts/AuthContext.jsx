@@ -3,7 +3,7 @@ import axios from 'axios';
 import api from '../routes/api';
 
 export const AuthContext = createContext();
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [errorAuth, setErrorAuth] = useState();
 
@@ -44,4 +44,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};

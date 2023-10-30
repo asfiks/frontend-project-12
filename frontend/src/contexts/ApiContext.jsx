@@ -8,7 +8,7 @@ import {
 
 export const ApiContext = createContext();
 
-export function ApiProvider({ children }) {
+export const ApiProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const getNewMessage = (newMessage) => {
@@ -69,4 +69,4 @@ export function ApiProvider({ children }) {
       {children}
     </ApiContext.Provider>
   );
-}
+};
