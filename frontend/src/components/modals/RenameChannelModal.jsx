@@ -10,7 +10,7 @@ import { ApiContext } from '../../contexts/ApiContext';
 import 'react-toastify/dist/ReactToastify.css';
 import properties from '../toastProp';
 
-export const RenameChannelModal = ({ id, show, handleClose }) => {
+const RenameChannelModal = ({ id, show, handleClose }) => {
   const { t } = useTranslation();
   const { renamedChannel } = useContext(ApiContext);
   const channels = useSelector(selectorsChannels.selectAll);
@@ -25,8 +25,8 @@ export const RenameChannelModal = ({ id, show, handleClose }) => {
   });
   const handleSubmit = async (values) => {
     try {
-      values.id = id;
-      await renamedChannel(values);
+      const updValues = { ...values, id };
+      await renamedChannel(updValues);
       toast.success(t('toast.rename'), properties);
       handleClose();
     } catch (error) {
@@ -83,3 +83,5 @@ export const RenameChannelModal = ({ id, show, handleClose }) => {
     </Modal>
   );
 };
+
+export default RenameChannelModal;

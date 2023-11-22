@@ -1,19 +1,17 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { selectorsChannels } from '../../slices/channelsSlice';
 import { ApiContext } from '../../contexts/ApiContext';
 import 'react-toastify/dist/ReactToastify.css';
 import properties from '../toastProp';
 
-export const RemoveChannelModal = ({ id, show, handleClose }) => {
+const RemoveChannelModal = ({ id, show, handleClose }) => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
-  const handleClick = async (id) => {
+  const handleClick = async (ident) => {
     try {
-      await removeChannel({ id });
+      await removeChannel({ ident });
       toast.success(t('toast.remove'), properties);
       handleClose();
     } catch (error) {
@@ -38,8 +36,10 @@ export const RemoveChannelModal = ({ id, show, handleClose }) => {
 
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>{t('modalRemoveChannel.buttonCancel')}</Button>
-        <Button variant="danger" onClick={async () => await handleClick(id)}>{t('modalRemoveChannel.buttonRemove')}</Button>
+        <Button variant="danger" onClick={() => handleClick(id)}>{t('modalRemoveChannel.buttonRemove')}</Button>
       </Modal.Footer>
     </Modal>
   );
 };
+
+export default RemoveChannelModal;

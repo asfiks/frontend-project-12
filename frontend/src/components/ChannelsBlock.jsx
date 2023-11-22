@@ -2,12 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer } from 'react-toastify';
 import { AuthContext } from '../contexts/AuthContext';
 import { fetchData, selectorsChannels, setCurrentChannelId } from '../slices/channelsSlice';
-import { AddChannelModal } from './modals/AddChannelModal';
-import { RenameChannelModal } from './modals/RenameChannelModal';
-import { RemoveChannelModal } from './modals/RemoveChannelModal';
+import AddChannelModal from './modals/AddChannelModal';
+import RenameChannelModal from './modals/RenameChannelModal';
+import RemoveChannelModal from './modals/RemoveChannelModal';
 
 const ChannelsBlock = () => {
   const { t } = useTranslation();

@@ -1,19 +1,15 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import LeoProfanity from 'leo-profanity';
-import { AuthContext } from '../contexts/AuthContext';
-import { fetchData, selectorsMessages, addMessage } from '../slices/messagesSlice';
+import { selectorsMessages } from '../slices/messagesSlice';
 import { selectorsChannels } from '../slices/channelsSlice';
 import { ApiContext } from '../contexts/ApiContext';
-import dict from '../locales/censor';
 
 const MessagesBlock = () => {
   const { t } = useTranslation();
-  const { token } = useContext(AuthContext);
   const username = localStorage.getItem('username');
-  const dispatch = useDispatch();
   const inputRef = useRef();
   const { getNewMessage } = useContext(ApiContext);
 
@@ -25,8 +21,8 @@ const MessagesBlock = () => {
   const actualMessages = messages.filter((m) => m.channelId === currentChannelId);
   const channels = useSelector(selectorsChannels.selectAll);
   const currentCount = actualMessages.length;
-  const nameCurrentChannel = (channels) => {
-    const curentChannel = channels.find((channel) => currentChannelId === channel.id);
+  const nameCurrentChannel = (chs) => {
+    const curentChannel = chs.find((channel) => currentChannelId === channel.id);
     return curentChannel ? curentChannel.name : null;
   };
 

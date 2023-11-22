@@ -10,7 +10,7 @@ import { ApiContext } from '../../contexts/ApiContext';
 import 'react-toastify/dist/ReactToastify.css';
 import properties from '../toastProp';
 
-export const AddChannelModal = ({ show, handleClose }) => {
+const AddChannelModal = ({ show, handleClose }) => {
   const { t } = useTranslation();
   const username = localStorage.getItem('username');
   const { getAddNewChannelFromServer } = useContext(ApiContext);
@@ -25,10 +25,9 @@ export const AddChannelModal = ({ show, handleClose }) => {
   });
 
   const handleSubmit = async (values) => {
-    values.username = username;
-    console.log(values);
+    const updatedValues = { ...values, username };
     try {
-      await getAddNewChannelFromServer(values);
+      await getAddNewChannelFromServer(updatedValues);
       toast.success(t('toast.add'), properties);
       handleClose();
     } catch (error) {
@@ -85,3 +84,5 @@ export const AddChannelModal = ({ show, handleClose }) => {
     </Modal>
   );
 };
+
+export default AddChannelModal;
