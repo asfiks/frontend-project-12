@@ -53,9 +53,9 @@ const AddChannelModal = ({ show, handleClose }) => {
           onSubmit={handleSubmit}
         >
           {({
-            handleSubmit, handleChange, values, touched, errors,
+            handleSubmit: formikSubmit, handleChange, values, touched, errors,
           }) => (
-            <Form noValidate onSubmit={handleSubmit}>
+            <Form noValidate onSubmit={formikSubmit}>
               <Form.Control
                 type="text"
                 id="name"

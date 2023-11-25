@@ -1,4 +1,4 @@
-export const NotFoundPage = (namePage) => {
+const NotFoundPage = () => {
   const styleDiv = {
     textAlign: 'center',
     padding: '20px',
@@ -10,3 +10,5 @@ export const NotFoundPage = (namePage) => {
     </div>
   );
 };
+
+export default NotFoundPage;

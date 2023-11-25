@@ -4,7 +4,7 @@ import MessagesBlock from '../components/MessageBlock';
 import NavBlock from '../components/NavBlock';
 import ChannelsBlock from '../components/ChannelsBlock';
 
-export const HomePage = () => (
+const HomePage = () => (
   <div className="h-100 vh-100">
     <div className="h-100" id="chat">
       <div className="d-flex flex-column h-100">
@@ -20,3 +20,5 @@ export const HomePage = () => (
     </div>
   </div>
 );
+
+export default HomePage;

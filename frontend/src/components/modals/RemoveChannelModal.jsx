@@ -9,9 +9,9 @@ import properties from '../toastProp';
 const RemoveChannelModal = ({ id, show, handleClose }) => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
-  const handleClick = async (ident) => {
+  const handleClick = async () => {
     try {
-      await removeChannel({ ident });
+      await removeChannel({ id });
       toast.success(t('toast.remove'), properties);
       handleClose();
     } catch (error) {

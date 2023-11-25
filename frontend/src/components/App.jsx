@@ -7,10 +7,10 @@ import { Provider } from 'react-redux';
 import { AuthProvider, AuthContext } from '../contexts/AuthContext';
 import { ApiProvider } from '../contexts/ApiContext';
 import store from '../slices/index';
-import { Login } from '../pages/Login';
-import { Signup } from '../pages/Signup';
-import { NotFoundPage } from '../pages/NotFoundPage';
-import { HomePage } from '../pages/HomePage';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
+import NotFoundPage from '../pages/NotFoundPage';
+import HomePage from '../pages/HomePage';
 import ru from '../locales/ru';
 
 const StartRoute = () => {

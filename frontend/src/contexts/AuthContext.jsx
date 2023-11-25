@@ -1,4 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, {
+  createContext, useState, useEffect, useMemo,
+} from 'react';
 import axios from 'axios';
 import api from '../routes/api';
 
@@ -36,11 +38,12 @@ export const AuthProvider = ({ children }) => {
     setToken('');
   };
 
+  const authContextValue = useMemo(() => ({
+    token, errorAuth, login, logout,
+  }), [token, errorAuth, login, logout]);
+
   return (
-    <AuthContext.Provider value={{
-      token, errorAuth, login, logout,
-    }}
-    >
+    <AuthContext.Provider value={authContextValue}>
       {children}
     </AuthContext.Provider>
   );

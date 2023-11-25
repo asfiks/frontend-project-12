@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import api from '../routes/api';
 import { AuthContext } from '../contexts/AuthContext';
-import image from '../components/forLogin.png';
 
-export const Signup = () => {
+const Signup = () => {
   const { t } = useTranslation();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -32,11 +31,11 @@ export const Signup = () => {
       await axios.post(api.signupPath(), values);
       await login(values);
       navigate('/');
-    } catch (error) {
-      if (error.response && error.response.status === 409) {
+    } catch (answer) {
+      if (answer.response && answer.response.status === 409) {
         setError(t('signup.validation.usernameIsHas'));
       } else {
-        console.error(error);
+        console.error(answer);
       }
     }
   };
@@ -65,9 +64,9 @@ export const Signup = () => {
                     }}
                   >
                     {({
-                      handleSubmit, handleChange, values, touched, errors,
+                      handleSubmit: formikSubmit, handleChange, values, touched, errors,
                     }) => (
-                      <Form className="w-100" noValidate onSubmit={handleSubmit}>
+                      <Form className="w-100" noValidate onSubmit={formikSubmit}>
                         <h1 className="text-center mb-4">{t('signup.registration')}</h1>
                         <Form.Group className="form-floating mb-3">
                           <Form.Control
@@ -133,3 +132,5 @@ export const Signup = () => {
     </div>
   );
 };
+
+export default Signup;

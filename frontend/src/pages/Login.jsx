@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../contexts/AuthContext';
 import image from '../components/forLogin.png';
 
-export const Login = () => {
+const Login = () => {
   const { t } = useTranslation();
   const { errorAuth, login } = useContext(AuthContext);
 
@@ -92,3 +92,5 @@ export const Login = () => {
 
   );
 };
+
+export default Login;
